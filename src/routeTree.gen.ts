@@ -10,33 +10,43 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CevremRouteImport } from './routes/cevrem'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CevremRoute = CevremRouteImport.update({
+  id: '/cevrem',
+  path: '/cevrem',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/cevrem': typeof CevremRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/cevrem': typeof CevremRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/cevrem': typeof CevremRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/cevrem'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/cevrem'
+  id: '__root__' | '/' | '/cevrem'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CevremRoute: typeof CevremRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +58,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cevrem': {
+      id: '/cevrem'
+      path: '/cevrem'
+      fullPath: '/cevrem'
+      preLoaderRoute: typeof CevremRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CevremRoute: CevremRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
