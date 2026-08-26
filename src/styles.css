@@ -32,12 +32,12 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-ring-offset-background: var(--background);
-  --color-safe: #10B981;
-  --color-safe-glow: #10B98140;
-  --color-warning: #F59E0B;
-  --color-warning-glow: #F59E0B40;
-  --color-critical: #EF4444;
-  --color-critical-glow: #EF444440;
+  --color-safe: #22c55e;
+  --color-safe-glow: #22c55e30;
+  --color-warning: #eab308;
+  --color-warning-glow: #eab30830;
+  --color-critical: #ef4444;
+  --color-critical-glow: #ef444430;
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -53,152 +53,155 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/* ════════════════════════════════════════════════════════════════════════════
+   Nabız — Hafif dark tema: slate-800 taban, yumuşak kenarlıklar, düşük doygunluk
+   ════════════════════════════════════════════════════════════════════════════ */
+
 :root {
   --radius: 0.5rem;
 
-  /* ── Base surfaces ── */
-  --background: #0f172a;
-  --foreground: #f8fafc;
-  --card: #1e293b;
-  --card-foreground: #f1f5f9;
-  --popover: #1e293b;
-  --popover-foreground: #f1f5f9;
+  /* ── Taban yüzeyler — slate-800 tonları, çok karanlık değil ── */
+  --background: #1e293b;
+  --foreground: #f1f5f9;
+  --card: #273548;
+  --card-foreground: #e2e8f0;
+  --popover: #273548;
+  --popover-foreground: #e2e8f0;
 
-  /* ── Primary — teal/cyan for medical feel ── */
-  --primary: #10B981;
-  --primary-foreground: #0f172a;
+  /* ── Primary — yumuşak yeşil ── */
+  --primary: #22c55e;
+  --primary-foreground: #1e293b;
 
   /* ── Secondary ── */
-  --secondary: #1e293b;
+  --secondary: #334155;
   --secondary-foreground: #cbd5e1;
 
   /* ── Muted ── */
-  --muted: #1e293b;
-  --muted-foreground: #64748b;
+  --muted: #334155;
+  --muted-foreground: #94a3b8;
 
   /* ── Accent ── */
-  --accent: #334155;
+  --accent: #475569;
   --accent-foreground: #f1f5f9;
 
-  /* ── Destructive / Critical ── */
-  --destructive: #EF4444;
+  /* ── Destructive ── */
+  --destructive: #ef4444;
   --destructive-foreground: #ffffff;
 
-  /* ── Borders & inputs ── */
+  /* ── Kenarlıklar — ince, yumuşak ── */
   --border: #334155;
   --input: #334155;
-  --ring: #10B981;
+  --ring: #22c55e;
 
-  /* ── Charts ── */
-  --chart-1: #10B981;
-  --chart-2: #F59E0B;
-  --chart-3: #EF4444;
-  --chart-4: #3B82F6;
-  --chart-5: #8B5CF6;
+  /* ── Chart ── */
+  --chart-1: #22c55e;
+  --chart-2: #eab308;
+  --chart-3: #ef4444;
+  --chart-4: #3b82f6;
+  --chart-5: #a855f7;
 
   /* ── Sidebar ── */
-  --sidebar: #0f172a;
+  --sidebar: #1e293b;
   --sidebar-foreground: #cbd5e1;
-  --sidebar-primary: #10B981;
-  --sidebar-primary-foreground: #0f172a;
-  --sidebar-accent: #1e293b;
+  --sidebar-primary: #22c55e;
+  --sidebar-primary-foreground: #1e293b;
+  --sidebar-accent: #273548;
   --sidebar-accent-foreground: #f1f5f9;
   --sidebar-border: #334155;
-  --sidebar-ring: #10B981;
+  --sidebar-ring: #22c55e;
 
-  /* ── Nabız — Medical color system ── */
+  /* ── Nabız renk sistemi — düşük doygunluk, sakin tonlar ── */
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
 
-  --mood-calm: #10B981;
-  --mood-calm-surface: #1e293b;
-  --mood-calm-ink: #6ee7b7;
+  --mood-calm: #22c55e;
+  --mood-calm-surface: #273548;
+  --mood-calm-ink: #86efac;
 
-  --mood-joy: #F59E0B;
-  --mood-joy-surface: #1e293b;
-  --mood-joy-ink: #fcd34d;
+  --mood-joy: #eab308;
+  --mood-joy-surface: #273548;
+  --mood-joy-ink: #fde047;
 
-  --mood-low: #8B5CF6;
-  --mood-low-surface: #1e293b;
-  --mood-low-ink: #c4b5fd;
+  --mood-low: #a855f7;
+  --mood-low-surface: #273548;
+  --mood-low-ink: #d8b4fe;
 
-  --mood-need: #3B82F6;
-  --mood-need-surface: #1e293b;
+  --mood-need: #3b82f6;
+  --mood-need-surface: #273548;
   --mood-need-ink: #93c5fd;
 
-  --mood-urgent: #EF4444;
-  --mood-urgent-surface: #2d1a1a;
+  --mood-urgent: #ef4444;
+  --mood-urgent-surface: #3b1a1a;
   --mood-urgent-ink: #fca5a5;
 
-  --color-sos: #EF4444;
+  --color-sos: #ef4444;
   --color-sos-surface: #450a0a;
   --color-sos-ink: #ffffff;
 
-  --shadow-soft: 0 1px 3px #00000040, 0 4px 20px -4px #00000060;
-  --shadow-glow-safe: 0 0 12px #10B98140, 0 0 4px #10B98120;
-  --shadow-glow-warning: 0 0 12px #F59E0B40, 0 0 4px #F59E0B20;
-  --shadow-glow-critical: 0 0 12px #EF444440, 0 0 4px #EF444420;
-  --shadow-glow-sos: 0 0 20px #EF444480, 0 0 60px #EF444430;
+  --shadow-soft: 0 1px 2px #00000030, 0 2px 8px -2px #00000040;
+  --shadow-glow-safe: 0 0 8px #22c55e25;
+  --shadow-glow-warning: 0 0 8px #eab30825;
+  --shadow-glow-critical: 0 0 8px #ef444425;
+  --shadow-glow-sos: 0 0 16px #ef444460, 0 0 40px #ef444420;
 }
 
-/* ── Dark mode mirrors :root — dark IS the default ── */
 .dark {
-  --background: #0f172a;
-  --foreground: #f8fafc;
-  --card: #1e293b;
-  --card-foreground: #f1f5f9;
-  --popover: #1e293b;
-  --popover-foreground: #f1f5f9;
-  --primary: #10B981;
-  --primary-foreground: #0f172a;
-  --secondary: #1e293b;
+  --background: #1e293b;
+  --foreground: #f1f5f9;
+  --card: #273548;
+  --card-foreground: #e2e8f0;
+  --popover: #273548;
+  --popover-foreground: #e2e8f0;
+  --primary: #22c55e;
+  --primary-foreground: #1e293b;
+  --secondary: #334155;
   --secondary-foreground: #cbd5e1;
-  --muted: #1e293b;
-  --muted-foreground: #64748b;
-  --accent: #334155;
+  --muted: #334155;
+  --muted-foreground: #94a3b8;
+  --accent: #475569;
   --accent-foreground: #f1f5f9;
-  --destructive: #EF4444;
+  --destructive: #ef4444;
   --destructive-foreground: #ffffff;
   --border: #334155;
   --input: #334155;
-  --ring: #10B981;
-  --chart-1: #10B981;
-  --chart-2: #F59E0B;
-  --chart-3: #EF4444;
-  --chart-4: #3B82F6;
-  --chart-5: #8B5CF6;
-  --sidebar: #0f172a;
+  --ring: #22c55e;
+  --chart-1: #22c55e;
+  --chart-2: #eab308;
+  --chart-3: #ef4444;
+  --chart-4: #3b82f6;
+  --chart-5: #a855f7;
+  --sidebar: #1e293b;
   --sidebar-foreground: #cbd5e1;
-  --sidebar-primary: #10B981;
-  --sidebar-primary-foreground: #0f172a;
-  --sidebar-accent: #1e293b;
+  --sidebar-primary: #22c55e;
+  --sidebar-primary-foreground: #1e293b;
+  --sidebar-accent: #273548;
   --sidebar-accent-foreground: #f1f5f9;
   --sidebar-border: #334155;
-  --sidebar-ring: #10B981;
+  --sidebar-ring: #22c55e;
 
-  --mood-calm: #10B981;
-  --mood-calm-surface: #1e293b;
-  --mood-calm-ink: #6ee7b7;
-  --mood-joy: #F59E0B;
-  --mood-joy-surface: #1e293b;
-  --mood-joy-ink: #fcd34d;
-  --mood-low: #8B5CF6;
-  --mood-low-surface: #1e293b;
-  --mood-low-ink: #c4b5fd;
-  --mood-need: #3B82F6;
-  --mood-need-surface: #1e293b;
+  --mood-calm: #22c55e;
+  --mood-calm-surface: #273548;
+  --mood-calm-ink: #86efac;
+  --mood-joy: #eab308;
+  --mood-joy-surface: #273548;
+  --mood-joy-ink: #fde047;
+  --mood-low: #a855f7;
+  --mood-low-surface: #273548;
+  --mood-low-ink: #d8b4fe;
+  --mood-need: #3b82f6;
+  --mood-need-surface: #273548;
   --mood-need-ink: #93c5fd;
-  --mood-urgent: #EF4444;
-  --mood-urgent-surface: #2d1a1a;
+  --mood-urgent: #ef4444;
+  --mood-urgent-surface: #3b1a1a;
   --mood-urgent-ink: #fca5a5;
-  --color-sos: #EF4444;
+  --color-sos: #ef4444;
   --color-sos-surface: #450a0a;
   --color-sos-ink: #ffffff;
 
-  --shadow-soft: 0 1px 3px #00000040, 0 4px 20px -4px #00000060;
-  --shadow-glow-safe: 0 0 12px #10B98140, 0 0 4px #10B98120;
-  --shadow-glow-warning: 0 0 12px #F59E0B40, 0 0 4px #F59E0B20;
-  --shadow-glow-critical: 0 0 12px #EF444440, 0 0 4px #EF444420;
-  --shadow-glow-sos: 0 0 20px #EF444480, 0 0 60px #EF444430;
+  --shadow-soft: 0 1px 2px #00000030, 0 2px 8px -2px #00000040;
+  --shadow-glow-safe: 0 0 8px #22c55e25;
+  --shadow-glow-warning: 0 0 8px #eab30825;
+  --shadow-glow-critical: 0 0 8px #ef444425;
+  --shadow-glow-sos: 0 0 16px #ef444460, 0 0 40px #ef444420;
 }
 
 @theme inline {
@@ -242,26 +245,10 @@
   }
 }
 
-/* ==========================================================================
-   Control panel grid overlay — subtle grid lines on dashboard containers
-   ========================================================================== */
-@utility dashboard-grid {
-  background-image:
-    linear-gradient(to right, #33415508 1px, transparent 1px),
-    linear-gradient(to bottom, #33415508 1px, transparent 1px);
-  background-size: 40px 40px;
-}
+/* ════════════════════════════════════════════════════════════════════════════
+   Utility'ler — hafif, temiz
+   ════════════════════════════════════════════════════════════════════════════ */
 
-@utility dashboard-grid-dense {
-  background-image:
-    linear-gradient(to right, #33415510 1px, transparent 1px),
-    linear-gradient(to bottom, #33415510 1px, transparent 1px);
-  background-size: 20px 20px;
-}
-
-/* ==========================================================================
-   Glow effects for status indicators
-   ========================================================================== */
 @utility glow-safe {
   box-shadow: var(--shadow-glow-safe);
 }
@@ -278,126 +265,89 @@
   box-shadow: var(--shadow-glow-sos);
 }
 
-/* ==========================================================================
-   Medical card surfaces — control panel aesthetic
-   ========================================================================== */
 @utility panel {
   background-color: var(--color-card);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-soft);
 }
 
 @utility panel-elevated {
-  background-color: #253349;
+  background-color: #2d3f54;
   border: 1px solid #3d516b;
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-soft), 0 0 1px #ffffff08 inset;
 }
 
-/* ==========================================================================
-   SOS & urgent animations — preserved from original
-   ========================================================================== */
+/* ════════════════════════════════════════════════════════════════════════════
+   Animasyonlar
+   ════════════════════════════════════════════════════════════════════════════ */
 
-/* Pulse ring for urgent cards */
 @utility pulse-urgent {
   animation: pulse-urgent-ring 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 @keyframes pulse-urgent-ring {
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 #EF444499;
+  0%, 100% {
+    box-shadow: 0 0 0 0 #ef444480;
   }
   50% {
-    box-shadow: 0 0 0 8px #EF444400;
+    box-shadow: 0 0 0 6px #ef444400;
   }
 }
 
-/* SOS full-screen beat */
 @utility pulse-sos {
   animation: pulse-sos-beat 1s ease-in-out infinite;
 }
 
 @keyframes pulse-sos-beat {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.85;
-  }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.85; }
 }
 
-/* SOS background flash */
 @utility pulse-sos-bg {
   animation: pulse-sos-bg-flash 1.2s ease-in-out infinite;
 }
 
 @keyframes pulse-sos-bg-flash {
-  0%,
-  100% {
-    background-color: #EF4444;
-  }
-  50% {
-    background-color: #dc2626;
-  }
+  0%, 100% { background-color: #ef4444; }
+  50% { background-color: #dc2626; }
 }
 
-/* Heart rate monitor line sweep */
 @utility heartbeat-line {
   animation: heartbeat-sweep 1.5s ease-in-out infinite;
 }
 
 @keyframes heartbeat-sweep {
-  0% {
-    background-position: -200% center;
-  }
-  100% {
-    background-position: 200% center;
-  }
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
 }
 
-/* Countdown ring */
 @utility countdown-ring {
   animation: countdown-dash 3s linear forwards;
 }
 
 @keyframes countdown-dash {
-  from {
-    stroke-dashoffset: 0;
-  }
-  to {
-    stroke-dashoffset: 283;
-  }
+  from { stroke-dashoffset: 0; }
+  to { stroke-dashoffset: 283; }
 }
 
-/* Status indicator blink */
 @utility status-blink {
   animation: status-blink-pulse 2s ease-in-out infinite;
 }
 
 @keyframes status-blink-pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.4;
-  }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
 }
 
-/* Safe / active breathing glow */
 @utility glow-breathe {
   animation: glow-breathe 3s ease-in-out infinite;
 }
 
 @keyframes glow-breathe {
-  0%,
-  100% {
-    box-shadow: 0 0 8px #10B98120;
+  0%, 100% {
+    box-shadow: 0 0 6px #22c55e18;
   }
   50% {
-    box-shadow: 0 0 20px #10B98150, 0 0 40px #10B98120;
+    box-shadow: 0 0 12px #22c55e30;
   }
 }

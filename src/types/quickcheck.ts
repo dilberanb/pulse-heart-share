@@ -1,4 +1,4 @@
-export type QuickCheckQuestionType = "how_are_you" | "are_you_available" | "are_you_safe" | "pet_needs";
+export type QuickCheckQuestionType = "how_are_you" | "are_you_available" | "are_you_safe" | "pet_needs" | "earthquake";
 
 export interface QuickCheckQuestion {
   id: string;
@@ -9,16 +9,14 @@ export interface QuickCheckQuestion {
 
 export type QuickCheckAnswer =
   | "all_good"
-  | "something_wrong"
-  | "problem"
-  | "need_help"
-  | "busy"
+  | "not_good"
   | "available"
-  | "later"
+  | "busy"
   | "safe"
-  | "not_home"
+  | "not_safe"
   | "harmed"
   | "trapped"
+  | "need_help"
   | "pet_fed"
   | "pet_needs_food"
   | "pet_emergency";

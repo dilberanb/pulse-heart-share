@@ -1,10 +1,6 @@
 import {
-  Ambulance,
-  Flame,
-  Shield,
-  ShieldAlert,
-  Heart,
   Phone,
+  Heart,
   HandHelping,
   MountainSnow,
   type LucideIcon,
@@ -20,42 +16,19 @@ export interface EmergencyNumber {
   telHref: string;
 }
 
+/**
+ * Türkiye'de tüm acil durumlar 112 numaralı hatta yönlendirilir.
+ * 112, polis, jandarma, itfaiye, ambulans ve AFAD için evrensel acil hattır.
+ */
 export const EMERGENCY_NUMBERS: EmergencyNumber[] = [
   {
     id: "112",
-    name: "Acil Sağlık",
+    name: "Acil Durum (112)",
     phone: "112",
-    description: "Ambulans, acil tıbbi müdahale",
-    icon: Ambulance,
+    description: "Ambulans, polis, itfaiye — tüm acil durumlar",
+    icon: Phone,
     category: "primary",
     telHref: "tel:112",
-  },
-  {
-    id: "110",
-    name: "İtfaiye",
-    phone: "110",
-    description: "Yangın, kurtarma ve AFAD desteği",
-    icon: Flame,
-    category: "primary",
-    telHref: "tel:110",
-  },
-  {
-    id: "155",
-    name: "Polis İmdat",
-    phone: "155",
-    description: "Güvenlik, suç ihbarı",
-    icon: Shield,
-    category: "primary",
-    telHref: "tel:155",
-  },
-  {
-    id: "156",
-    name: "Jandarma",
-    phone: "156",
-    description: "Kırsal alan güvenlik ihbarı",
-    icon: ShieldAlert,
-    category: "primary",
-    telHref: "tel:156",
   },
   {
     id: "kades",

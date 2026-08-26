@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useEmergency } from "@/features/emergency/hooks/useEmergency";
-import { PRIMARY_EMERGENCY_NUMBERS } from "@/features/emergency/data/emergencyNumbers";
+import { PRIMARY_EMERGENCY_NUMBERS, SUPPORT_EMERGENCY_NUMBERS } from "@/features/emergency/data/emergencyNumbers";
 import { triggerVibration } from "@/lib/location";
 
 interface EmergencyPanelProps {
@@ -223,24 +223,39 @@ export function EmergencyPanel({ open, onClose }: EmergencyPanelProps) {
         {!alert && (
           <section className="space-y-3">
             <h2 className="text-base font-bold tracking-wide text-white/90">ACİL HATLAR</h2>
-            <div className="grid w-full grid-cols-2 gap-3">
-              {PRIMARY_EMERGENCY_NUMBERS.map((num) => {
+
+            {/* Ana acil hat — 112 */}
+            {PRIMARY_EMERGENCY_NUMBERS.map((num) => {
+              const Icon = num.icon;
+              return (
+                <a
+                  key={num.id}
+                  href={num.telHref}
+                  onClick={() => triggerEmergency(num.id)}
+                  className="flex w-full items-center justify-center gap-4 rounded-2xl bg-white/20 p-6 text-center transition-colors active:bg-white/30"
+                >
+                  <Icon className="h-8 w-8" />
+                  <div>
+                    <span className="block text-3xl font-black">{num.phone}</span>
+                    <span className="text-xs text-white/70">{num.description}</span>
+                  </div>
+                </a>
+              );
+            })}
+
+            {/* Destek hatları */}
+            <div className="grid w-full grid-cols-3 gap-2">
+              {SUPPORT_EMERGENCY_NUMBERS.map((num) => {
                 const Icon = num.icon;
                 return (
                   <a
                     key={num.id}
                     href={num.telHref}
-                    onClick={() => {
-                      if (!alert) triggerEmergency(num.id);
-                    }}
-                    className={cn(
-                      "flex flex-col items-center gap-2 rounded-3xl bg-white/15 p-5 text-center",
-                      "transition-colors active:bg-white/25",
-                    )}
+                    className="flex flex-col items-center gap-1.5 rounded-xl bg-white/10 p-3 text-center transition-colors active:bg-white/20"
                   >
-                    <Icon className="h-8 w-8" />
-                    <span className="text-2xl font-black">{num.phone}</span>
-                    <span className="text-xs text-white/70">{num.name}</span>
+                    <Icon className="h-5 w-5" />
+                    <span className="text-sm font-bold">{num.phone}</span>
+                    <span className="text-[10px] text-white/60 leading-tight">{num.name}</span>
                   </a>
                 );
               })}
