@@ -10,33 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AyarlarRouteImport } from './routes/ayarlar'
+import { Route as CevremRouteImport } from './routes/cevrem'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AyarlarRoute = AyarlarRouteImport.update({
+  id: '/ayarlar',
+  path: '/ayarlar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CevremRoute = CevremRouteImport.update({
+  id: '/cevrem',
+  path: '/cevrem',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ayarlar': typeof AyarlarRoute
+  '/cevrem': typeof CevremRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ayarlar': typeof AyarlarRoute
+  '/cevrem': typeof CevremRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ayarlar': typeof AyarlarRoute
+  '/cevrem': typeof CevremRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/ayarlar' | '/cevrem'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/ayarlar' | '/cevrem'
+  id: '__root__' | '/' | '/ayarlar' | '/cevrem'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AyarlarRoute: typeof AyarlarRoute
+  CevremRoute: typeof CevremRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +68,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ayarlar': {
+      id: '/ayarlar'
+      path: '/ayarlar'
+      fullPath: '/ayarlar'
+      preLoaderRoute: typeof AyarlarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cevrem': {
+      id: '/cevrem'
+      path: '/cevrem'
+      fullPath: '/cevrem'
+      preLoaderRoute: typeof CevremRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AyarlarRoute: AyarlarRoute,
+  CevremRoute: CevremRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
