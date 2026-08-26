@@ -12,6 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AyarlarRouteImport } from './routes/ayarlar'
 import { Route as CevremRouteImport } from './routes/cevrem'
+import { Route as GirisRouteImport } from './routes/giris'
+import { Route as KayitRouteImport } from './routes/kayit'
+import { Route as KullanimSartlariRouteImport } from './routes/kullanim-sartlari'
+import { Route as PolitikalarRouteImport } from './routes/politikalar'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,35 +32,93 @@ const CevremRoute = CevremRouteImport.update({
   path: '/cevrem',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GirisRoute = GirisRouteImport.update({
+  id: '/giris',
+  path: '/giris',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KayitRoute = KayitRouteImport.update({
+  id: '/kayit',
+  path: '/kayit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KullanimSartlariRoute = KullanimSartlariRouteImport.update({
+  id: '/kullanim-sartlari',
+  path: '/kullanim-sartlari',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PolitikalarRoute = PolitikalarRouteImport.update({
+  id: '/politikalar',
+  path: '/politikalar',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ayarlar': typeof AyarlarRoute
   '/cevrem': typeof CevremRoute
+  '/giris': typeof GirisRoute
+  '/kayit': typeof KayitRoute
+  '/kullanim-sartlari': typeof KullanimSartlariRoute
+  '/politikalar': typeof PolitikalarRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ayarlar': typeof AyarlarRoute
   '/cevrem': typeof CevremRoute
+  '/giris': typeof GirisRoute
+  '/kayit': typeof KayitRoute
+  '/kullanim-sartlari': typeof KullanimSartlariRoute
+  '/politikalar': typeof PolitikalarRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/ayarlar': typeof AyarlarRoute
   '/cevrem': typeof CevremRoute
+  '/giris': typeof GirisRoute
+  '/kayit': typeof KayitRoute
+  '/kullanim-sartlari': typeof KullanimSartlariRoute
+  '/politikalar': typeof PolitikalarRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/ayarlar' | '/cevrem'
+  fullPaths:
+    | '/'
+    | '/ayarlar'
+    | '/cevrem'
+    | '/giris'
+    | '/kayit'
+    | '/kullanim-sartlari'
+    | '/politikalar'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/ayarlar' | '/cevrem'
-  id: '__root__' | '/' | '/ayarlar' | '/cevrem'
+  to:
+    | '/'
+    | '/ayarlar'
+    | '/cevrem'
+    | '/giris'
+    | '/kayit'
+    | '/kullanim-sartlari'
+    | '/politikalar'
+  id:
+    | '__root__'
+    | '/'
+    | '/ayarlar'
+    | '/cevrem'
+    | '/giris'
+    | '/kayit'
+    | '/kullanim-sartlari'
+    | '/politikalar'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AyarlarRoute: typeof AyarlarRoute
   CevremRoute: typeof CevremRoute
+  GirisRoute: typeof GirisRoute
+  KayitRoute: typeof KayitRoute
+  KullanimSartlariRoute: typeof KullanimSartlariRoute
+  PolitikalarRoute: typeof PolitikalarRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +144,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CevremRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/giris': {
+      id: '/giris'
+      path: '/giris'
+      fullPath: '/giris'
+      preLoaderRoute: typeof GirisRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kayit': {
+      id: '/kayit'
+      path: '/kayit'
+      fullPath: '/kayit'
+      preLoaderRoute: typeof KayitRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kullanim-sartlari': {
+      id: '/kullanim-sartlari'
+      path: '/kullanim-sartlari'
+      fullPath: '/kullanim-sartlari'
+      preLoaderRoute: typeof KullanimSartlariRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/politikalar': {
+      id: '/politikalar'
+      path: '/politikalar'
+      fullPath: '/politikalar'
+      preLoaderRoute: typeof PolitikalarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +179,10 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AyarlarRoute: AyarlarRoute,
   CevremRoute: CevremRoute,
+  GirisRoute: GirisRoute,
+  KayitRoute: KayitRoute,
+  KullanimSartlariRoute: KullanimSartlariRoute,
+  PolitikalarRoute: PolitikalarRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

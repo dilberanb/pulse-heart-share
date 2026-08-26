@@ -18,6 +18,8 @@ interface AppState {
   isComposerOpen: boolean;
   /** SOS panelinin açık olup olmadığı. */
   isSosOpen: boolean;
+  /** Acil durum panelinin açık olup olmadığı. */
+  isEmergencyOpen: boolean;
 
   setCircle: (circle: PrivacyCircle) => void;
   setOnlyActive: (onlyActive: boolean) => void;
@@ -26,6 +28,8 @@ interface AppState {
   closeComposer: () => void;
   openSos: () => void;
   closeSos: () => void;
+  openEmergency: () => void;
+  closeEmergency: () => void;
 }
 
 export const useAppStore = create<AppState>((set) => ({
@@ -34,6 +38,7 @@ export const useAppStore = create<AppState>((set) => ({
   defaultPrivacy: "close",
   isComposerOpen: false,
   isSosOpen: false,
+  isEmergencyOpen: false,
 
   setCircle: (circle) => set({ circle }),
   setOnlyActive: (onlyActive) => set({ onlyActive }),
@@ -42,6 +47,8 @@ export const useAppStore = create<AppState>((set) => ({
   closeComposer: () => set({ isComposerOpen: false }),
   openSos: () => set({ isSosOpen: true }),
   closeSos: () => set({ isSosOpen: false }),
+  openEmergency: () => set({ isEmergencyOpen: true }),
+  closeEmergency: () => set({ isEmergencyOpen: false }),
 }));
 
 /** Gizlilik çemberi etiketleri — UI genelinde tek kaynak. */

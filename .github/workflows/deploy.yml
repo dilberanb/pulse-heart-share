@@ -1,0 +1,60 @@
+name: Dağıtım
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+
+    steps:
+      - name: Kodu klonla
+        uses: actions/checkout@v4
+
+      - name: Kurulum.Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Kurulum.Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Önbellek Bağımlılıklar
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/bun
+            node_modules
+          key: ${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+
+      - name: Bağımlılıkları kur
+        run: bun install --frozen-lockfile
+
+      - name: Lint
+        run: bun run lint
+
+      - name: Tip denetimi
+        run: bunx tsc --noEmit
+
+      - name: Derleme
+        run: bun run build
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+
+      - name: Cloudflare'a dağıt
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy .output/public --project-name=pulse-heart-share

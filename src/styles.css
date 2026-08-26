@@ -4,20 +4,6 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/*
- * Design system definition.
- *
- * The @theme inline block maps CSS custom properties to Tailwind utility
- * classes (e.g. --color-primary -> bg-primary, text-primary).
- *
- * The :root and .dark blocks define the actual color values using oklch.
- * All colors MUST use oklch format.
- *
- * To add a new semantic color:
- * 1. Add the variable to :root (light value) and .dark (dark value)
- * 2. Register it in @theme inline as --color-<name>: var(--<name>)
- */
-
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -62,74 +48,74 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
+  --radius: 0.5rem;
+  --background: oklch(0.985 0.002 247);
+  --foreground: oklch(0.15 0.02 260);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
+  --card-foreground: oklch(0.15 0.02 260);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.984 0.003 247.858);
-  --sidebar-foreground: oklch(0.129 0.042 264.695);
-  --sidebar-primary: oklch(0.208 0.042 265.755);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.968 0.007 247.896);
-  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
-  --sidebar-border: oklch(0.929 0.013 255.508);
-  --sidebar-ring: oklch(0.704 0.04 256.788);
+  --popover-foreground: oklch(0.15 0.02 260);
+  --primary: oklch(0.42 0.12 250);
+  --primary-foreground: oklch(0.99 0.002 247);
+  --secondary: oklch(0.955 0.008 248);
+  --secondary-foreground: oklch(0.25 0.03 260);
+  --muted: oklch(0.96 0.005 248);
+  --muted-foreground: oklch(0.50 0.02 260);
+  --accent: oklch(0.955 0.01 250);
+  --accent-foreground: oklch(0.25 0.03 260);
+  --destructive: oklch(0.55 0.25 27);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.915 0.006 250);
+  --input: oklch(0.915 0.006 250);
+  --ring: oklch(0.42 0.12 250);
+  --chart-1: oklch(0.42 0.12 250);
+  --chart-2: oklch(0.60 0.12 170);
+  --chart-3: oklch(0.45 0.08 270);
+  --chart-4: oklch(0.72 0.14 85);
+  --chart-5: oklch(0.55 0.20 27);
+  --sidebar: oklch(0.995 0.001 247);
+  --sidebar-foreground: oklch(0.25 0.03 260);
+  --sidebar-primary: oklch(0.42 0.12 250);
+  --sidebar-primary-foreground: oklch(0.99 0.002 247);
+  --sidebar-accent: oklch(0.94 0.01 250);
+  --sidebar-accent-foreground: oklch(0.25 0.03 260);
+  --sidebar-border: oklch(0.93 0.005 248);
+  --sidebar-ring: oklch(0.42 0.12 250);
 }
 
 .dark {
-  --background: oklch(0.129 0.042 264.695);
-  --foreground: oklch(0.984 0.003 247.858);
-  --card: oklch(0.208 0.042 265.755);
-  --card-foreground: oklch(0.984 0.003 247.858);
-  --popover: oklch(0.208 0.042 265.755);
-  --popover-foreground: oklch(0.984 0.003 247.858);
-  --primary: oklch(0.929 0.013 255.508);
-  --primary-foreground: oklch(0.208 0.042 265.755);
-  --secondary: oklch(0.279 0.041 260.031);
-  --secondary-foreground: oklch(0.984 0.003 247.858);
-  --muted: oklch(0.279 0.041 260.031);
-  --muted-foreground: oklch(0.704 0.04 256.788);
-  --accent: oklch(0.279 0.041 260.031);
-  --accent-foreground: oklch(0.984 0.003 247.858);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.551 0.027 264.364);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.208 0.042 265.755);
-  --sidebar-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.279 0.041 260.031);
-  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.551 0.027 264.364);
+  --background: oklch(0.14 0.02 260);
+  --foreground: oklch(0.93 0.005 248);
+  --card: oklch(0.19 0.02 260);
+  --card-foreground: oklch(0.93 0.005 248);
+  --popover: oklch(0.19 0.02 260);
+  --popover-foreground: oklch(0.93 0.005 248);
+  --primary: oklch(0.62 0.14 250);
+  --primary-foreground: oklch(0.14 0.02 260);
+  --secondary: oklch(0.24 0.02 260);
+  --secondary-foreground: oklch(0.90 0.005 248);
+  --muted: oklch(0.22 0.015 260);
+  --muted-foreground: oklch(0.62 0.03 260);
+  --accent: oklch(0.24 0.02 260);
+  --accent-foreground: oklch(0.90 0.005 248);
+  --destructive: oklch(0.62 0.22 27);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.28 0.015 260);
+  --input: oklch(0.26 0.015 260);
+  --ring: oklch(0.62 0.14 250);
+  --chart-1: oklch(0.62 0.14 250);
+  --chart-2: oklch(0.70 0.12 170);
+  --chart-3: oklch(0.55 0.08 270);
+  --chart-4: oklch(0.78 0.12 85);
+  --chart-5: oklch(0.62 0.22 27);
+  --sidebar: oklch(0.17 0.02 260);
+  --sidebar-foreground: oklch(0.90 0.005 248);
+  --sidebar-primary: oklch(0.62 0.14 250);
+  --sidebar-primary-foreground: oklch(0.14 0.02 260);
+  --sidebar-accent: oklch(0.22 0.02 260);
+  --sidebar-accent-foreground: oklch(0.90 0.005 248);
+  --sidebar-border: oklch(0.26 0.015 260);
+  --sidebar-ring: oklch(0.62 0.14 250);
 }
 
 @layer base {
@@ -144,64 +130,72 @@
 }
 
 /* ==========================================================================
-   Nabız — Duygu/durum temelli semantik renk sistemi
-   Her ruh hali kategorisi için: yüzey (surface), kenar (border), metin (ink)
+   Nabız — Profesyonel tıbbi/güvenlik renk sistemi
    ========================================================================== */
 
 :root {
   --font-sans:
     "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
 
-  /* Sakin / nötr — yumuşak mavi & yeşil */
-  --mood-calm: oklch(0.62 0.09 220);
-  --mood-calm-surface: oklch(0.96 0.03 220);
-  --mood-calm-ink: oklch(0.38 0.08 225);
+  /* Sakin / nötr */
+  --mood-calm: oklch(0.55 0.08 240);
+  --mood-calm-surface: oklch(0.97 0.008 245);
+  --mood-calm-ink: oklch(0.30 0.06 240);
 
-  /* Yüksek enerji / mutlu — sıcak sarı & turuncu */
-  --mood-joy: oklch(0.75 0.14 75);
-  --mood-joy-surface: oklch(0.96 0.05 85);
-  --mood-joy-ink: oklch(0.45 0.12 65);
+  /* Yüksek enerji / mutlu */
+  --mood-joy: oklch(0.68 0.14 85);
+  --mood-joy-surface: oklch(0.97 0.015 90);
+  --mood-joy-ink: oklch(0.40 0.10 80);
 
-  /* Düşük / olumsuz — soluk mor & gri */
-  --mood-low: oklch(0.55 0.08 295);
-  --mood-low-surface: oklch(0.95 0.02 295);
-  --mood-low-ink: oklch(0.38 0.07 295);
+  /* Düşük / olumsuz */
+  --mood-low: oklch(0.50 0.06 280);
+  --mood-low-surface: oklch(0.96 0.01 280);
+  --mood-low-ink: oklch(0.35 0.05 280);
 
-  /* İhtiyaç / destek — sakin teal */
-  --mood-need: oklch(0.6 0.09 175);
-  --mood-need-surface: oklch(0.95 0.03 175);
-  --mood-need-ink: oklch(0.36 0.07 178);
+  /* İhtiyaç / destek */
+  --mood-need: oklch(0.52 0.08 195);
+  --mood-need-surface: oklch(0.96 0.012 195);
+  --mood-need-ink: oklch(0.32 0.06 200);
 
-  /* Acil — yüksek kontrastlı kırmızı */
-  --mood-urgent: oklch(0.55 0.22 25);
-  --mood-urgent-surface: oklch(0.95 0.04 25);
-  --mood-urgent-ink: oklch(0.44 0.2 25);
+  /* Acil — dramatik, yüksek kontrastlı kırmızı */
+  --mood-urgent: oklch(0.50 0.26 25);
+  --mood-urgent-surface: oklch(0.95 0.035 20);
+  --mood-urgent-ink: oklch(0.40 0.22 25);
 
-  --shadow-soft: 0 1px 2px oklch(0.2 0.03 260 / 6%), 0 8px 24px -12px oklch(0.2 0.03 260 / 14%);
+  /* SOS — tam ekran acil durum */
+  --color-sos: oklch(0.45 0.28 22);
+  --color-sos-surface: oklch(0.48 0.26 22);
+  --color-sos-ink: oklch(0.98 0 0);
+
+  --shadow-soft: 0 1px 2px oklch(0.2 0.02 260 / 4%), 0 4px 12px -4px oklch(0.2 0.02 260 / 10%);
 }
 
 .dark {
-  --mood-calm: oklch(0.72 0.1 220);
-  --mood-calm-surface: oklch(0.28 0.05 230);
-  --mood-calm-ink: oklch(0.9 0.04 220);
+  --mood-calm: oklch(0.68 0.09 240);
+  --mood-calm-surface: oklch(0.22 0.03 240);
+  --mood-calm-ink: oklch(0.88 0.03 240);
 
-  --mood-joy: oklch(0.82 0.14 80);
-  --mood-joy-surface: oklch(0.3 0.06 70);
-  --mood-joy-ink: oklch(0.94 0.06 85);
+  --mood-joy: oklch(0.76 0.14 85);
+  --mood-joy-surface: oklch(0.25 0.04 80);
+  --mood-joy-ink: oklch(0.92 0.04 85);
 
-  --mood-low: oklch(0.7 0.09 295);
-  --mood-low-surface: oklch(0.28 0.04 295);
-  --mood-low-ink: oklch(0.91 0.03 295);
+  --mood-low: oklch(0.65 0.07 280);
+  --mood-low-surface: oklch(0.22 0.03 280);
+  --mood-low-ink: oklch(0.88 0.03 280);
 
-  --mood-need: oklch(0.72 0.1 175);
-  --mood-need-surface: oklch(0.27 0.05 180);
-  --mood-need-ink: oklch(0.92 0.04 175);
+  --mood-need: oklch(0.65 0.09 195);
+  --mood-need-surface: oklch(0.22 0.03 195);
+  --mood-need-ink: oklch(0.88 0.04 195);
 
-  --mood-urgent: oklch(0.68 0.2 25);
-  --mood-urgent-surface: oklch(0.31 0.11 25);
-  --mood-urgent-ink: oklch(0.95 0.05 25);
+  --mood-urgent: oklch(0.60 0.24 25);
+  --mood-urgent-surface: oklch(0.25 0.08 20);
+  --mood-urgent-ink: oklch(0.95 0.04 25);
 
-  --shadow-soft: 0 1px 2px oklch(0 0 0 / 30%), 0 8px 24px -12px oklch(0 0 0 / 50%);
+  --color-sos: oklch(0.50 0.28 22);
+  --color-sos-surface: oklch(0.35 0.18 22);
+  --color-sos-ink: oklch(0.98 0 0);
+
+  --shadow-soft: 0 1px 2px oklch(0 0 0 / 30%), 0 4px 12px -4px oklch(0 0 0 / 50%);
 }
 
 @theme inline {
@@ -222,6 +216,9 @@
   --color-mood-urgent: var(--mood-urgent);
   --color-mood-urgent-surface: var(--mood-urgent-surface);
   --color-mood-urgent-ink: var(--mood-urgent-ink);
+  --color-sos: var(--color-sos);
+  --color-sos-surface: var(--color-sos-surface);
+  --color-sos-ink: var(--color-sos-ink);
 }
 
 @layer base {
@@ -231,17 +228,46 @@
   }
 }
 
-/* Acil durum kartları için nazik ama fark edilir nabız animasyonu */
+/* Acil durum kartları için belirgin nabız animasyonu */
 @utility pulse-urgent {
-  animation: pulse-urgent-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  animation: pulse-urgent-ring 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 @keyframes pulse-urgent-ring {
   0%,
   100% {
-    box-shadow: 0 0 0 0 var(--mood-urgent);
+    box-shadow: 0 0 0 0 oklch(0.50 0.26 25 / 60%);
   }
   50% {
-    box-shadow: 0 0 0 6px transparent;
+    box-shadow: 0 0 0 8px oklch(0.50 0.26 25 / 0%);
+  }
+}
+
+/* SOS tam ekran modu için nabız atışı */
+@utility pulse-sos {
+  animation: pulse-sos-beat 1s ease-in-out infinite;
+}
+
+@keyframes pulse-sos-beat {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+/* Geri sayım animasyonu */
+@utility countdown-ring {
+  animation: countdown-dash 3s linear forwards;
+}
+
+@keyframes countdown-dash {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: 283;
   }
 }

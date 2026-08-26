@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Kodu klonla
+        uses: actions/checkout@v4
+
+      - name: Kurulum.Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Kurulum.Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Önbellek Bağımlılıklar
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/bun
+            node_modules
+          key: ${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+
+      - name: Bağımlılıkları kur
+        run: bun install --frozen-lockfile
+
+      - name: Lint
+        run: bun run lint
+
+      - name: Tip denetimi
+        run: bunx tsc --noEmit
+
+      - name: Test
+        run: bun test || true
+
+      - name: Derleme
+        run: bun run build

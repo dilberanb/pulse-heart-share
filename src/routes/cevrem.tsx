@@ -43,7 +43,7 @@ function CirclesPage() {
           {MOCK_PEOPLE.map((person) => (
             <li
               key={person.id}
-              className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-3xl border border-border bg-card p-4"
+              className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-xl border border-border bg-card p-4"
             >
               <div className="flex min-w-0 items-center gap-3">
                 <Avatar className="h-10 w-10 shrink-0">

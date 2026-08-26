@@ -38,13 +38,13 @@ function SettingsPage() {
           <p className="mt-1 text-sm text-muted-foreground">Paylaşım ve akış tercihleri.</p>
         </header>
 
-        <div className="space-y-4 rounded-3xl border border-border bg-card p-5">
+        <div className="space-y-4 rounded-xl border border-border bg-card p-5">
           <div className="space-y-1.5">
             <Label htmlFor="default-privacy">Varsayılan gizlilik çemberi</Label>
             <PrivacySelect
               value={defaultPrivacy}
               onChange={setDefaultPrivacy}
-              className="h-11 w-full rounded-2xl"
+              className="h-10 w-full rounded-lg"
               ariaLabel="Varsayılan gizlilik çemberi"
             />
           </div>

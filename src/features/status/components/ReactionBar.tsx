@@ -34,8 +34,8 @@ export function ReactionBar({ entry, onReact }: ReactionBarProps) {
                 aria-pressed={active}
                 onClick={() => onReact(kind)}
                 className={cn(
-                  "h-9 min-w-11 gap-1.5 rounded-full px-2.5 text-xs transition-transform active:scale-95",
-                  active && "bg-background/80 font-semibold",
+                  "h-8 min-w-10 gap-1.5 rounded-lg px-2 text-xs transition-transform active:scale-95",
+                  active && "bg-primary/10 font-semibold text-primary",
                 )}
               >
                 <Icon className={cn("h-4 w-4 shrink-0", active && "fill-current")} />

@@ -8,11 +8,8 @@ import { PrivacySelect } from "@/features/status/components/PrivacySelect";
 import { StatusCard } from "@/features/status/components/StatusCard";
 import { useNudge, useStatusFeed, useToggleReaction } from "@/features/status/hooks/useStatusFeed";
 import { useAppStore } from "@/store/useAppStore";
+import type { StatusEntry } from "@/types/status";
 
-/**
- * "Nabız" akışı — bağlı kişilerin güncel durumları.
- * Bilinçli olarak sonsuz kaydırma / algoritma yoktur: sonlu, sakin bir liste.
- */
 export function PulseFeed() {
   const circle = useAppStore((s) => s.circle);
   const setCircle = useAppStore((s) => s.setCircle);
@@ -23,13 +20,23 @@ export function PulseFeed() {
   const react = useToggleReaction();
   const nudge = useNudge();
 
+  const sorted = entries
+    ? [...entries].sort((a: StatusEntry, b: StatusEntry) => {
+        if (a.status.category === "urgent" && b.status.category !== "urgent") return -1;
+        if (a.status.category !== "urgent" && b.status.category === "urgent") return 1;
+        return 0;
+      })
+    : undefined;
+
   return (
     <section className="space-y-4">
-      <header className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 sm:flex sm:justify-between">
+      <header className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="min-w-0">
-          <h2 className="truncate text-lg font-semibold tracking-tight">Sevdiklerinin nabzı</h2>
-          <p className="truncate text-sm text-muted-foreground">
-            Durumlar 24 saat sonra sessizce sona erer.
+          <h2 className="truncate text-base font-semibold tracking-tight text-foreground">
+            Nabız Akışı
+          </h2>
+          <p className="truncate text-xs text-muted-foreground">
+            Durumlar 24 saat sonra sona erer.
           </p>
         </div>
         <div className="flex shrink-0 items-center gap-3">
@@ -43,22 +50,21 @@ export function PulseFeed() {
             value={circle}
             onChange={setCircle}
             ariaLabel="Çembere göre filtrele"
-            className="h-10 w-44 rounded-2xl"
+            className="h-9 w-40 rounded-lg text-xs"
           />
         </div>
       </header>
 
       {isLoading ? (
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
           {Array.from({ length: 6 }).map((_, index) => (
-            <Skeleton key={index} className="h-52 rounded-3xl" />
+            <Skeleton key={index} className="h-44 rounded-xl" />
           ))}
         </div>
-      ) : entries && entries.length > 0 ? (
-        // Masonry benzeri yerleşim: kart yükseklikleri serbest, boşluk oluşmaz.
-        <div className="columns-1 gap-4 sm:columns-2 xl:columns-3 [&>*]:mb-4 [&>*]:break-inside-avoid">
+      ) : sorted && sorted.length > 0 ? (
+        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
           <AnimatePresence initial={false}>
-            {entries.map((entry) => (
+            {sorted.map((entry) => (
               <StatusCard
                 key={entry.id}
                 entry={entry}
@@ -70,9 +76,9 @@ export function PulseFeed() {
           </AnimatePresence>
         </div>
       ) : (
-        <div className="rounded-3xl border border-dashed border-border p-10 text-center">
-          <p className="text-sm font-medium">Bu çemberde güncel durum yok.</p>
-          <p className="mt-1 text-sm text-muted-foreground">
+        <div className="rounded-xl border border-dashed border-border bg-muted/30 p-8 text-center">
+          <p className="text-sm font-medium text-foreground">Bu çemberde güncel durum yok.</p>
+          <p className="mt-1 text-xs text-muted-foreground">
             Filtreyi değiştir ya da sevdiklerine bir yoklama gönder.
           </p>
         </div>

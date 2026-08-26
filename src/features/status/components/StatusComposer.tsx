@@ -72,7 +72,7 @@ export function StatusComposer() {
     <Sheet open={isOpen} onOpenChange={(open) => (open ? undefined : resetAndClose())}>
       <SheetContent
         side="bottom"
-        className="flex h-[92vh] flex-col gap-0 rounded-t-3xl p-0 sm:h-[88vh]"
+        className="flex h-[92vh] flex-col gap-0 rounded-t-2xl p-0 sm:h-[88vh]"
       >
         <SheetHeader className="gap-1 px-5 pt-5 pb-3 text-left">
           <SheetTitle className="text-xl">Şu an nasılsın?</SheetTitle>
@@ -89,18 +89,18 @@ export function StatusComposer() {
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Durum ara: huzurlu, hasta, aranmak istiyor…"
               aria-label="Durum ara"
-              className="h-12 rounded-2xl pl-9 text-base"
+              className="h-11 rounded-xl pl-9 text-sm"
             />
           </div>
 
           <Tabs value={tab} onValueChange={(value) => setTab(value as TabValue)}>
             <ScrollArea className="w-full">
-              <TabsList className="w-max rounded-full">
-                <TabsTrigger value="all" className="rounded-full">
+              <TabsList className="w-max rounded-lg">
+                <TabsTrigger value="all" className="rounded-lg text-xs">
                   Tümü
                 </TabsTrigger>
                 {STATUS_CATEGORIES.filter((c) => c.id !== "urgent").map((category) => (
-                  <TabsTrigger key={category.id} value={category.id} className="rounded-full">
+                  <TabsTrigger key={category.id} value={category.id} className="rounded-lg text-xs">
                     <span aria-hidden className="mr-1">
                       {category.emoji}
                     </span>
@@ -130,7 +130,7 @@ export function StatusComposer() {
                     onClick={() => setSelected(option)}
                     aria-pressed={active}
                     className={cn(
-                      "flex min-h-11 items-center gap-2 rounded-2xl border p-3 text-left transition-colors",
+                      "flex min-h-10 items-center gap-2 rounded-lg border p-3 text-left transition-colors",
                       tone.surface,
                       tone.border,
                       active && "ring-2 ring-ring ring-offset-2 ring-offset-background",
@@ -176,7 +176,7 @@ export function StatusComposer() {
 
           <Button
             size="lg"
-            className="h-12 w-full gap-2 rounded-2xl text-base"
+            className="h-11 w-full gap-2 rounded-xl text-sm"
             disabled={!selected || publish.isPending}
             onClick={handlePublish}
           >
