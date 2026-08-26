@@ -5,6 +5,7 @@ import { MyStatusPanel } from "@/features/status/components/MyStatusPanel";
 import { PulseFeed } from "@/features/status/components/PulseFeed";
 import { SosSheet } from "@/features/status/components/SosSheet";
 import { StatusComposer } from "@/features/status/components/StatusComposer";
+import { QuickCheckDashboard } from "@/features/quickcheck/components/QuickCheckDashboard";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -29,8 +30,9 @@ export const Route = createFileRoute("/")({
 function DashboardPage() {
   return (
     <AppShell>
-      <div className="space-y-6">
+      <div className="space-y-6 bg-background">
         <h1 className="sr-only">Nabız gösterge paneli</h1>
+        <QuickCheckDashboard />
         <MyStatusPanel />
         <PulseFeed />
       </div>

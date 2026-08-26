@@ -1,21 +1,23 @@
-import { createClient } from "@supabase/supabase-js";
+import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
 const supabaseUrl = import.meta.env["VITE_SUPABASE_URL"];
 const supabaseAnonKey = import.meta.env["VITE_SUPABASE_ANON_KEY"];
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error("Supabase URL ve Anahtar tanımlanmamış");
-}
+const isSupabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey);
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
-  auth: {
-    autoRefreshToken: true,
-    persistSession: true,
-    detectSessionInUrl: true,
-  },
-  realtime: {
-    params: {
-      eventsPerSecond: 10,
-    },
-  },
-});
+export const supabase: SupabaseClient = isSupabaseConfigured
+  ? createClient(supabaseUrl!, supabaseAnonKey!, {
+      auth: {
+        autoRefreshToken: true,
+        persistSession: true,
+        detectSessionInUrl: true,
+      },
+      realtime: {
+        params: {
+          eventsPerSecond: 10,
+        },
+      },
+    })
+  : createClient("https://placeholder.supabase.co", "placeholder-key");
+
+export { isSupabaseConfigured };

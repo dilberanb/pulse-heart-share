@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AyarlarRouteImport } from './routes/ayarlar'
 import { Route as CevremRouteImport } from './routes/cevrem'
+import { Route as DepremRouteImport } from './routes/deprem'
 import { Route as GirisRouteImport } from './routes/giris'
 import { Route as KayitRouteImport } from './routes/kayit'
 import { Route as KullanimSartlariRouteImport } from './routes/kullanim-sartlari'
@@ -30,6 +31,11 @@ const AyarlarRoute = AyarlarRouteImport.update({
 const CevremRoute = CevremRouteImport.update({
   id: '/cevrem',
   path: '/cevrem',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DepremRoute = DepremRouteImport.update({
+  id: '/deprem',
+  path: '/deprem',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GirisRoute = GirisRouteImport.update({
@@ -57,6 +63,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ayarlar': typeof AyarlarRoute
   '/cevrem': typeof CevremRoute
+  '/deprem': typeof DepremRoute
   '/giris': typeof GirisRoute
   '/kayit': typeof KayitRoute
   '/kullanim-sartlari': typeof KullanimSartlariRoute
@@ -66,6 +73,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ayarlar': typeof AyarlarRoute
   '/cevrem': typeof CevremRoute
+  '/deprem': typeof DepremRoute
   '/giris': typeof GirisRoute
   '/kayit': typeof KayitRoute
   '/kullanim-sartlari': typeof KullanimSartlariRoute
@@ -76,6 +84,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/ayarlar': typeof AyarlarRoute
   '/cevrem': typeof CevremRoute
+  '/deprem': typeof DepremRoute
   '/giris': typeof GirisRoute
   '/kayit': typeof KayitRoute
   '/kullanim-sartlari': typeof KullanimSartlariRoute
@@ -87,6 +96,7 @@ export interface FileRouteTypes {
     | '/'
     | '/ayarlar'
     | '/cevrem'
+    | '/deprem'
     | '/giris'
     | '/kayit'
     | '/kullanim-sartlari'
@@ -96,6 +106,7 @@ export interface FileRouteTypes {
     | '/'
     | '/ayarlar'
     | '/cevrem'
+    | '/deprem'
     | '/giris'
     | '/kayit'
     | '/kullanim-sartlari'
@@ -105,6 +116,7 @@ export interface FileRouteTypes {
     | '/'
     | '/ayarlar'
     | '/cevrem'
+    | '/deprem'
     | '/giris'
     | '/kayit'
     | '/kullanim-sartlari'
@@ -115,6 +127,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AyarlarRoute: typeof AyarlarRoute
   CevremRoute: typeof CevremRoute
+  DepremRoute: typeof DepremRoute
   GirisRoute: typeof GirisRoute
   KayitRoute: typeof KayitRoute
   KullanimSartlariRoute: typeof KullanimSartlariRoute
@@ -142,6 +155,13 @@ declare module '@tanstack/react-router' {
       path: '/cevrem'
       fullPath: '/cevrem'
       preLoaderRoute: typeof CevremRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/deprem': {
+      id: '/deprem'
+      path: '/deprem'
+      fullPath: '/deprem'
+      preLoaderRoute: typeof DepremRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/giris': {
@@ -179,6 +199,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AyarlarRoute: AyarlarRoute,
   CevremRoute: CevremRoute,
+  DepremRoute: DepremRoute,
   GirisRoute: GirisRoute,
   KayitRoute: KayitRoute,
   KullanimSartlariRoute: KullanimSartlariRoute,
