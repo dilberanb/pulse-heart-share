@@ -25,7 +25,7 @@ export interface StatusOption {
   category: StatusCategory;
   tone: MoodTone;
   /** Arama kutusunda eşleşmeyi artıran ek anahtar kelimeler. */
-  keywords?: string[];
+  keywords?: string[] | undefined;
 }
 
 export interface Person {
@@ -33,7 +33,7 @@ export interface Person {
   name: string;
   /** Kullanıcının çemberdeki rolü, örn. "Anne". */
   relation: string;
-  avatarUrl?: string;
+  avatarUrl?: string | undefined;
   /** Bu kişinin hangi gizlilik çemberinde olduğu. */
   circle: Exclude<PrivacyCircle, "everyone">;
 }
@@ -47,7 +47,7 @@ export interface StatusEntry {
   createdAt: string;
   privacy: PrivacyCircle;
   /** Kullanıcının eklediği kısa serbest not (opsiyonel). */
-  note?: string;
+  note?: string | undefined;
   /** Tepki türü başına sayaç. */
   reactions: Record<ReactionKind, number>;
   /** Mevcut kullanıcının gönderdiği tepkiler (optimistic UI için). */
@@ -58,7 +58,7 @@ export interface StatusEntry {
 export interface PublishStatusInput {
   statusId: string;
   privacy: PrivacyCircle;
-  note?: string;
+  note?: string | undefined;
 }
 
 /** Feed filtreleme seçenekleri. */
