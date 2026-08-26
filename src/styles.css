@@ -142,3 +142,106 @@
     color: var(--color-foreground);
   }
 }
+
+/* ==========================================================================
+   Nabız — Duygu/durum temelli semantik renk sistemi
+   Her ruh hali kategorisi için: yüzey (surface), kenar (border), metin (ink)
+   ========================================================================== */
+
+:root {
+  --font-sans:
+    "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+
+  /* Sakin / nötr — yumuşak mavi & yeşil */
+  --mood-calm: oklch(0.62 0.09 220);
+  --mood-calm-surface: oklch(0.96 0.03 220);
+  --mood-calm-ink: oklch(0.38 0.08 225);
+
+  /* Yüksek enerji / mutlu — sıcak sarı & turuncu */
+  --mood-joy: oklch(0.75 0.14 75);
+  --mood-joy-surface: oklch(0.96 0.05 85);
+  --mood-joy-ink: oklch(0.45 0.12 65);
+
+  /* Düşük / olumsuz — soluk mor & gri */
+  --mood-low: oklch(0.55 0.08 295);
+  --mood-low-surface: oklch(0.95 0.02 295);
+  --mood-low-ink: oklch(0.38 0.07 295);
+
+  /* İhtiyaç / destek — sakin teal */
+  --mood-need: oklch(0.6 0.09 175);
+  --mood-need-surface: oklch(0.95 0.03 175);
+  --mood-need-ink: oklch(0.36 0.07 178);
+
+  /* Acil — yüksek kontrastlı kırmızı */
+  --mood-urgent: oklch(0.55 0.22 25);
+  --mood-urgent-surface: oklch(0.95 0.04 25);
+  --mood-urgent-ink: oklch(0.44 0.2 25);
+
+  --shadow-soft: 0 1px 2px oklch(0.2 0.03 260 / 6%), 0 8px 24px -12px oklch(0.2 0.03 260 / 14%);
+}
+
+.dark {
+  --mood-calm: oklch(0.72 0.1 220);
+  --mood-calm-surface: oklch(0.28 0.05 230);
+  --mood-calm-ink: oklch(0.9 0.04 220);
+
+  --mood-joy: oklch(0.82 0.14 80);
+  --mood-joy-surface: oklch(0.3 0.06 70);
+  --mood-joy-ink: oklch(0.94 0.06 85);
+
+  --mood-low: oklch(0.7 0.09 295);
+  --mood-low-surface: oklch(0.28 0.04 295);
+  --mood-low-ink: oklch(0.91 0.03 295);
+
+  --mood-need: oklch(0.72 0.1 175);
+  --mood-need-surface: oklch(0.27 0.05 180);
+  --mood-need-ink: oklch(0.92 0.04 175);
+
+  --mood-urgent: oklch(0.68 0.2 25);
+  --mood-urgent-surface: oklch(0.31 0.11 25);
+  --mood-urgent-ink: oklch(0.95 0.05 25);
+
+  --shadow-soft: 0 1px 2px oklch(0 0 0 / 30%), 0 8px 24px -12px oklch(0 0 0 / 50%);
+}
+
+@theme inline {
+  --font-sans: var(--font-sans);
+
+  --color-mood-calm: var(--mood-calm);
+  --color-mood-calm-surface: var(--mood-calm-surface);
+  --color-mood-calm-ink: var(--mood-calm-ink);
+  --color-mood-joy: var(--mood-joy);
+  --color-mood-joy-surface: var(--mood-joy-surface);
+  --color-mood-joy-ink: var(--mood-joy-ink);
+  --color-mood-low: var(--mood-low);
+  --color-mood-low-surface: var(--mood-low-surface);
+  --color-mood-low-ink: var(--mood-low-ink);
+  --color-mood-need: var(--mood-need);
+  --color-mood-need-surface: var(--mood-need-surface);
+  --color-mood-need-ink: var(--mood-need-ink);
+  --color-mood-urgent: var(--mood-urgent);
+  --color-mood-urgent-surface: var(--mood-urgent-surface);
+  --color-mood-urgent-ink: var(--mood-urgent-ink);
+}
+
+@layer base {
+  body {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* Acil durum kartları için nazik ama fark edilir nabız animasyonu */
+@utility pulse-urgent {
+  animation: pulse-urgent-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-urgent-ring {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 var(--mood-urgent);
+  }
+  50% {
+    box-shadow: 0 0 0 6px transparent;
+  }
+}
