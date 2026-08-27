@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Brain, Accessibility, PawPrint, Users, Route as RouteIcon, ShieldAlert, ArrowRight } from "lucide-react";
+import { Brain, Accessibility, PawPrint, Users, Route as RouteIcon, ShieldAlert, ArrowRight, Siren } from "lucide-react";
 
 import { AppShell } from "@/components/layout/AppShell";
 import { MemoryMode } from "@/features/memory/components/MemoryMode";
@@ -9,6 +9,7 @@ import { PetStatus } from "@/features/status/components/PetStatus";
 import { PetCarePanel } from "@/features/missing/components/PetCarePanel";
 import { SafeCompanion } from "@/features/companion/components/SafeCompanion";
 import { SeniorMode } from "@/features/elderly/components/SeniorMode";
+import { EmergencyActionsPanel } from "@/features/alert/components/EmergencyActionsPanel";
 import { useAppStore } from "@/store/useAppStore";
 import { cn } from "@/lib/utils";
 
@@ -26,7 +27,7 @@ export const Route = createFileRoute("/guvenli")({
   component: GuvenliPage,
 });
 
-type TabKey = "memory" | "access" | "pet" | "companion" | "senior";
+type TabKey = "memory" | "access" | "pet" | "companion" | "senior" | "alert";
 
 const TABS: { key: TabKey; label: string; icon: typeof Brain }[] = [
   { key: "memory", label: "Hafıza Desteği", icon: Brain },
@@ -34,6 +35,7 @@ const TABS: { key: TabKey; label: string; icon: typeof Brain }[] = [
   { key: "pet", label: "Evcil Hayvan", icon: PawPrint },
   { key: "companion", label: "Yol Arkadaşlığı", icon: RouteIcon },
   { key: "senior", label: "Yaşlı Modu", icon: Users },
+  { key: "alert", label: "Acil Durum", icon: Siren },
 ];
 
 function GuvenliPage() {
@@ -178,6 +180,17 @@ function GuvenliPage() {
                     : "Yaşlı Modunu Aç'a basınca, gerçek büyük butonlu tam ekran modu burada çalışır."}
                 </p>
               </div>
+            </div>
+          )}
+
+          {tab === "alert" && (
+            <div className="space-y-4">
+              <SectionIntro
+                icon={<Siren className="h-5 w-5 text-red-400" />}
+                title="Acil Durum Eylemleri"
+                desc="Mahsur kaldım, kaza yaptım, panik atak geçiriyorum gibi durumları seç, kime gideceğini belirle; duruma göre anlık bildirim ve/veya konum paylaşılır."
+              />
+              <EmergencyActionsPanel />
             </div>
           )}
 

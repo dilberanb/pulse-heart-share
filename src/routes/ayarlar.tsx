@@ -7,7 +7,7 @@ import { PrivacySelect } from "@/features/status/components/PrivacySelect";
 import { SosSheet } from "@/features/status/components/SosSheet";
 import { StatusComposer } from "@/features/status/components/StatusComposer";
 import { useAppStore } from "@/store/useAppStore";
-import { FileText, Shield } from "lucide-react";
+import { FileText, Shield, HeartPulse } from "lucide-react";
 
 export const Route = createFileRoute("/ayarlar")({
   head: () => ({
@@ -63,6 +63,19 @@ function SettingsPage() {
               onCheckedChange={setOnlyActive}
             />
           </div>
+        </div>
+
+        <div className="space-y-2">
+          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            Sağlık
+          </p>
+          <Link
+            to="/tibbikart"
+            className="flex items-center gap-3 rounded-xl border border-border bg-card p-4 transition-colors hover:bg-accent"
+          >
+            <HeartPulse className="h-5 w-5 text-red-500" />
+            <span className="text-sm font-medium">Tıbbi Kart</span>
+          </Link>
         </div>
 
         <div className="space-y-2">

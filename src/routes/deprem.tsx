@@ -3,6 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { MapPin, AlertTriangle, Shield, Radio } from "lucide-react";
 
 import { AppShell } from "@/components/layout/AppShell";
+import { EvacuationPlan } from "@/features/deprem/components/EvacuationPlan";
 
 export const Route = createFileRoute("/deprem")({
   head: () => ({
@@ -152,7 +153,13 @@ function DepremPage() {
         <div className="rounded-xl border border-border bg-card p-4 space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-semibold text-foreground">Hazırlık Durumu</h3>
-            <span className="text-xs text-muted-foreground">Duruma dokunarak güncelle</span>
+            <button
+              type="button"
+              onClick={() => document.getElementById("tahliye-plani")?.scrollIntoView({ behavior: "smooth" })}
+              className="text-xs font-semibold text-primary hover:underline"
+            >
+              Tahliye Planını Göster ↓
+            </button>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
@@ -167,6 +174,11 @@ function DepremPage() {
               />
             ))}
           </div>
+        </div>
+
+        {/* Tahliye Planı */}
+        <div id="tahliye-plani" className="scroll-mt-6">
+          <EvacuationPlan />
         </div>
 
         {/* Checklist */}
@@ -184,22 +196,6 @@ function DepremPage() {
               onChange={() => toggleItem(i)}
             />
           ))}
-        </div>
-
-        {/* Emergency contacts */}
-        <div className="rounded-xl border border-border bg-card p-4 space-y-3">
-          <h3 className="text-sm font-semibold text-foreground">Acil Durum Numaraları</h3>
-
-          <div className="space-y-2">
-            <ContactRow name="Acil Durum — Tümü (112)" number="112" highlight />
-            <ContactRow name="AFAD — Afet ve Acil Durum" number="122" />
-            <ContactRow name="AKUT — Arama Kurtarma" number="444 25 88" />
-            <ContactRow name="ALO 183 — Sosyal Destek" number="183" />
-          </div>
-          <p className="mt-2 text-xs text-muted-foreground">
-            Ambulans, polis, itfaiye ve deprem ihbarları artık tek numara olan{" "}
-            <span className="font-semibold text-primary">112</span>'ye yönlendirilir.
-          </p>
         </div>
       </div>
     </AppShell>
@@ -275,20 +271,5 @@ function ChecklistItem({
         {label}
       </span>
     </label>
-  );
-}
-
-function ContactRow({ name, number, highlight }: { name: string; number: string; highlight?: boolean }) {
-  return (
-    <div
-      className={`flex items-center justify-between rounded-lg px-3 py-2 ${
-        highlight ? "bg-primary/10 ring-1 ring-primary/30" : "bg-muted/30"
-      }`}
-    >
-      <span className="text-sm font-medium text-foreground">{name}</span>
-      <span className={`text-sm font-mono ${highlight ? "font-bold text-primary" : "text-primary"}`}>
-        {number}
-      </span>
-    </div>
   );
 }

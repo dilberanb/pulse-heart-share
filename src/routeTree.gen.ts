@@ -19,6 +19,7 @@ import { Route as KayipRouteImport } from './routes/kayip'
 import { Route as KayitRouteImport } from './routes/kayit'
 import { Route as KullanimSartlariRouteImport } from './routes/kullanim-sartlari'
 import { Route as PolitikalarRouteImport } from './routes/politikalar'
+import { Route as TibbikartRouteImport } from './routes/tibbikart'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -70,6 +71,11 @@ const PolitikalarRoute = PolitikalarRouteImport.update({
   path: '/politikalar',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TibbikartRoute = TibbikartRouteImport.update({
+  id: '/tibbikart',
+  path: '/tibbikart',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -82,6 +88,7 @@ export interface FileRoutesByFullPath {
   '/kayit': typeof KayitRoute
   '/kullanim-sartlari': typeof KullanimSartlariRoute
   '/politikalar': typeof PolitikalarRoute
+  '/tibbikart': typeof TibbikartRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -94,6 +101,7 @@ export interface FileRoutesByTo {
   '/kayit': typeof KayitRoute
   '/kullanim-sartlari': typeof KullanimSartlariRoute
   '/politikalar': typeof PolitikalarRoute
+  '/tibbikart': typeof TibbikartRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -107,6 +115,7 @@ export interface FileRoutesById {
   '/kayit': typeof KayitRoute
   '/kullanim-sartlari': typeof KullanimSartlariRoute
   '/politikalar': typeof PolitikalarRoute
+  '/tibbikart': typeof TibbikartRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -121,6 +130,7 @@ export interface FileRouteTypes {
     | '/kayit'
     | '/kullanim-sartlari'
     | '/politikalar'
+    | '/tibbikart'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -133,6 +143,7 @@ export interface FileRouteTypes {
     | '/kayit'
     | '/kullanim-sartlari'
     | '/politikalar'
+    | '/tibbikart'
   id:
     | '__root__'
     | '/'
@@ -145,6 +156,7 @@ export interface FileRouteTypes {
     | '/kayit'
     | '/kullanim-sartlari'
     | '/politikalar'
+    | '/tibbikart'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -158,6 +170,7 @@ export interface RootRouteChildren {
   KayitRoute: typeof KayitRoute
   KullanimSartlariRoute: typeof KullanimSartlariRoute
   PolitikalarRoute: typeof PolitikalarRoute
+  TibbikartRoute: typeof TibbikartRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -232,6 +245,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PolitikalarRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tibbikart': {
+      id: '/tibbikart'
+      path: '/tibbikart'
+      fullPath: '/tibbikart'
+      preLoaderRoute: typeof TibbikartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -246,6 +266,7 @@ const rootRouteChildren: RootRouteChildren = {
   KayitRoute: KayitRoute,
   KullanimSartlariRoute: KullanimSartlariRoute,
   PolitikalarRoute: PolitikalarRoute,
+  TibbikartRoute: TibbikartRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
