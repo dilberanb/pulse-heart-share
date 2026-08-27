@@ -9,8 +9,8 @@ import { useAppStore } from "@/store/useAppStore";
 const NAV_ITEMS = [
   { to: "/", label: "Nabız", Icon: Activity },
   { to: "/cevrem", label: "Çevrem", Icon: Users },
-  { to: "/deprem", label: "Deprem", Icon: MapPin },
   { to: "/guvenli", label: "Güvenli Mod", Icon: ShieldCheck },
+  { to: "/deprem", label: "Deprem", Icon: MapPin },
   { to: "/ayarlar", label: "Ayarlar", Icon: Settings },
 ] as const;
 

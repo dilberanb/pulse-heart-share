@@ -6,6 +6,8 @@ import { AppShell } from "@/components/layout/AppShell";
 import { MemoryMode } from "@/features/memory/components/MemoryMode";
 import { AccessibilityMode } from "@/features/accessibility/components/AccessibilityMode";
 import { PetStatus } from "@/features/status/components/PetStatus";
+import { PetCarePanel } from "@/features/missing/components/PetCarePanel";
+import { MissingPanel } from "@/features/missing/components/MissingPanel";
 import { SafeCompanion } from "@/features/companion/components/SafeCompanion";
 import { SeniorMode } from "@/features/elderly/components/SeniorMode";
 import { useAppStore } from "@/store/useAppStore";
@@ -89,6 +91,7 @@ function GuvenliPage() {
                 desc="Karışıklık anında iletişim kurulabilmesi ve güvenlik için tasarlandı."
               />
               <MemoryMode />
+              <MissingPanel />
             </div>
           )}
 
@@ -108,7 +111,7 @@ function GuvenliPage() {
               <SectionIntro
                 icon={<PawPrint className="h-5 w-5 text-amber-400" />}
                 title="Evcil Hayvan Kaçışı / Güvenliği"
-                desc="Evcil hayvanın durumunu paylaş ve acil durumda bildir."
+                desc="Evcil hayvanının durumunu paylaş, bakım bildirimi gönder ve kaybolursa hemen kimlik kartı oluştur."
               />
               <PetStatus
                 pet={{
@@ -118,6 +121,8 @@ function GuvenliPage() {
                   age: "3 yaş",
                 }}
               />
+              <PetCarePanel petName="Pamuk" />
+              <MissingPanel />
             </div>
           )}
 

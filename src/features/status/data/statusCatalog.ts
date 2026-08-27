@@ -197,6 +197,9 @@ export const STATUS_CATALOG: StatusOption[] = [
   s("petresting", "Dinleniyor", "😴", "situation", "calm", ["uyku", "dinlenme", "evcil"]),
   s("petgrooming", "Taranıyor", "✨", "situation", "calm", ["bakım", "temizlik", "evcil"]),
   s("petfeeding", "Besleniyor", "🥩", "situation", "calm", ["mama", "yemek", "evcil"]),
+  s("pethome", "Evde değilim", "🏠", "situation", "calm", ["dışarıda", "evde yok"]),
+  s("petalone", "evde tek", "🐾", "situation", "need", ["yalnız", "tek başına"]),
+  s("petneedfood", "Beslenmesi gerek", "🍖", "situation", "need", ["mama", "aç", "besle"]),
   s("petbathing", "Yıkanıyor", "🛁", "situation", "calm", ["banyo", "temizlik", "evcil"]),
   s("pettraining", "Eğitimde", "🎓", "situation", "calm", ["eğitim", "öğrenme", "evcil"]),
   s("pettraveling", "Yolculukta", "🚗", "situation", "calm", ["seyahat", "taşıma", "evcil"]),
@@ -241,6 +244,7 @@ export const STATUS_CATALOG: StatusOption[] = [
   s("panicattack", "Panik atak", "😰", "urgent", "urgent", ["kriz"]),
   s("callnow", "Hemen arayın", "☎️", "urgent", "urgent", ["acil ara"]),
   s("petemergency", "Evcil hayvan acil", "🚨", "urgent", "urgent", ["evcil", "acil", "hayvan"]),
+  s("personmissing", "Kayıp — kişi", "🚨", "urgent", "urgent", ["kayıp", "arama", "kayboldu", "alzheimer"]),
 ];
 
 /** Acil (SOS) durumları — SOS panelinde ayrı gösterilir. */
