@@ -44,15 +44,15 @@ export function QuickCheckModal({ member, open, onOpenChange }: QuickCheckModalP
         questionType: type,
       },
       {
-        onSuccess: () => {
-          setShowConfirmation(true);
-          setTimeout(() => {
-            setShowConfirmation(false);
-            setSentQuestion(null);
-            setShowOther(false);
-            onOpenChange(false);
-          }, 1800);
-        },
+          onSuccess: () => {
+            setShowConfirmation(true);
+            setTimeout(() => {
+              setShowConfirmation(false);
+              setSentQuestion(null);
+              setShowOther(false);
+              onOpenChange(false);
+            }, 3600);
+          },
         onError: () => {
           setSentQuestion(null);
         },
