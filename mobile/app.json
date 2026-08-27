@@ -1,29 +1,75 @@
 {
   "expo": {
-    "name": "mobile",
-    "slug": "mobile",
+    "name": "Nabız",
+    "slug": "nabiz",
+    "scheme": "nabiz",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "dark",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1e293b"
+    },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.nabiz.app",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Acil durumda konumunuzu aile üyelerinizle paylaşmak için lokasyon izni gereklidir.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Arka planda güvenlik takibi için lokasyon izni gereklidir."
+      }
     },
     "android": {
+      "package": "com.nabiz.app",
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#1e293b",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_BACKGROUND_LOCATION",
+        "VIBRATE",
+        "RECEIVE_BOOT_COMPLETED",
+        "FOREGROUND_SERVICE",
+        "POST_NOTIFICATIONS",
+        "READ_SMS",
+        "SEND_SMS"
+      ]
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro",
+      "output": "static"
     },
     "plugins": [
       "expo-status-bar",
-      "expo-router"
-    ]
+      "expo-router",
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Acil durumda konumunuzu aile üyelerinizle paylaşmak için izin gerekli.",
+          "locationAlwaysAndWhenInUsePermission": "Arka planda güvenlik takibi için izin gerekli.",
+          "isIosBackgroundLocationEnabled": true,
+          "isAndroidBackgroundLocationEnabled": true
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icon.png",
+          "color": "#22c55e",
+          "sounds": []
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
   }
 }
