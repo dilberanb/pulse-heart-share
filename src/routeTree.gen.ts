@@ -14,6 +14,7 @@ import { Route as AyarlarRouteImport } from './routes/ayarlar'
 import { Route as CevremRouteImport } from './routes/cevrem'
 import { Route as DepremRouteImport } from './routes/deprem'
 import { Route as GirisRouteImport } from './routes/giris'
+import { Route as GuvenliRouteImport } from './routes/guvenli'
 import { Route as KayitRouteImport } from './routes/kayit'
 import { Route as KullanimSartlariRouteImport } from './routes/kullanim-sartlari'
 import { Route as PolitikalarRouteImport } from './routes/politikalar'
@@ -43,6 +44,11 @@ const GirisRoute = GirisRouteImport.update({
   path: '/giris',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GuvenliRoute = GuvenliRouteImport.update({
+  id: '/guvenli',
+  path: '/guvenli',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const KayitRoute = KayitRouteImport.update({
   id: '/kayit',
   path: '/kayit',
@@ -65,6 +71,7 @@ export interface FileRoutesByFullPath {
   '/cevrem': typeof CevremRoute
   '/deprem': typeof DepremRoute
   '/giris': typeof GirisRoute
+  '/guvenli': typeof GuvenliRoute
   '/kayit': typeof KayitRoute
   '/kullanim-sartlari': typeof KullanimSartlariRoute
   '/politikalar': typeof PolitikalarRoute
@@ -75,6 +82,7 @@ export interface FileRoutesByTo {
   '/cevrem': typeof CevremRoute
   '/deprem': typeof DepremRoute
   '/giris': typeof GirisRoute
+  '/guvenli': typeof GuvenliRoute
   '/kayit': typeof KayitRoute
   '/kullanim-sartlari': typeof KullanimSartlariRoute
   '/politikalar': typeof PolitikalarRoute
@@ -86,6 +94,7 @@ export interface FileRoutesById {
   '/cevrem': typeof CevremRoute
   '/deprem': typeof DepremRoute
   '/giris': typeof GirisRoute
+  '/guvenli': typeof GuvenliRoute
   '/kayit': typeof KayitRoute
   '/kullanim-sartlari': typeof KullanimSartlariRoute
   '/politikalar': typeof PolitikalarRoute
@@ -98,6 +107,7 @@ export interface FileRouteTypes {
     | '/cevrem'
     | '/deprem'
     | '/giris'
+    | '/guvenli'
     | '/kayit'
     | '/kullanim-sartlari'
     | '/politikalar'
@@ -108,6 +118,7 @@ export interface FileRouteTypes {
     | '/cevrem'
     | '/deprem'
     | '/giris'
+    | '/guvenli'
     | '/kayit'
     | '/kullanim-sartlari'
     | '/politikalar'
@@ -118,6 +129,7 @@ export interface FileRouteTypes {
     | '/cevrem'
     | '/deprem'
     | '/giris'
+    | '/guvenli'
     | '/kayit'
     | '/kullanim-sartlari'
     | '/politikalar'
@@ -129,6 +141,7 @@ export interface RootRouteChildren {
   CevremRoute: typeof CevremRoute
   DepremRoute: typeof DepremRoute
   GirisRoute: typeof GirisRoute
+  GuvenliRoute: typeof GuvenliRoute
   KayitRoute: typeof KayitRoute
   KullanimSartlariRoute: typeof KullanimSartlariRoute
   PolitikalarRoute: typeof PolitikalarRoute
@@ -171,6 +184,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GirisRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/guvenli': {
+      id: '/guvenli'
+      path: '/guvenli'
+      fullPath: '/guvenli'
+      preLoaderRoute: typeof GuvenliRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/kayit': {
       id: '/kayit'
       path: '/kayit'
@@ -201,6 +221,7 @@ const rootRouteChildren: RootRouteChildren = {
   CevremRoute: CevremRoute,
   DepremRoute: DepremRoute,
   GirisRoute: GirisRoute,
+  GuvenliRoute: GuvenliRoute,
   KayitRoute: KayitRoute,
   KullanimSartlariRoute: KullanimSartlariRoute,
   PolitikalarRoute: PolitikalarRoute,

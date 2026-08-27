@@ -101,6 +101,45 @@ export default function DashboardScreen() {
         </Pressable>
       )}
 
+      {/* Güvenli Mod menüsü */}
+      <View style={styles.secureHeader}>
+        <Text style={styles.secureTitle}>🛡️ Güvenli Mod</Text>
+      </View>
+      <View style={styles.secureGrid}>
+        <Pressable
+          onPress={() => router.push("/alzheimer")}
+          style={styles.secureCard}
+        >
+          <Text style={styles.secureIcon}>🧠</Text>
+          <Text style={styles.secureLabel}>Hafıza Desteği</Text>
+          <Text style={styles.secureDesc}>Alzheimer</Text>
+        </Pressable>
+        <Pressable
+          onPress={() => router.push("/erisilebilirlik")}
+          style={styles.secureCard}
+        >
+          <Text style={styles.secureIcon}>♿</Text>
+          <Text style={styles.secureLabel}>Erişilebilirlik</Text>
+          <Text style={styles.secureDesc}>Engelli desteği</Text>
+        </Pressable>
+        <Pressable
+          onPress={() => router.push("/deprem")}
+          style={styles.secureCard}
+        >
+          <Text style={styles.secureIcon}>🌍</Text>
+          <Text style={styles.secureLabel}>Deprem</Text>
+          <Text style={styles.secureDesc}>Bilinç & plan</Text>
+        </Pressable>
+        <Pressable
+          onPress={() => router.push("/quickcheck")}
+          style={styles.secureCard}
+        >
+          <Text style={styles.secureIcon}>🐾</Text>
+          <Text style={styles.secureLabel}>Evcil Hayvan</Text>
+          <Text style={styles.secureDesc}>Besleme & acil</Text>
+        </Pressable>
+      </View>
+
       {/* QuickCheck özeti */}
       <Card style={styles.summaryCard}>
         <View style={styles.summaryRow}>
@@ -145,6 +184,22 @@ const styles = StyleSheet.create({
   sosHint: { color: "rgba(255,255,255,0.8)", fontSize: 12, marginTop: 4 },
   seniorLink: { paddingVertical: spacing.sm, marginBottom: spacing.md },
   seniorLinkText: { color: colors.primary, fontSize: 13, fontWeight: "600" },
+  secureHeader: { marginBottom: spacing.sm },
+  secureTitle: { fontSize: 16, fontWeight: "800", color: colors.foreground },
+  secureGrid: { flexDirection: "row", flexWrap: "wrap", gap: spacing.sm, marginBottom: spacing.lg },
+  secureCard: {
+    width: "48%",
+    flexGrow: 1,
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.borderSoft,
+    borderRadius: radius.lg,
+    padding: spacing.lg,
+    alignItems: "center",
+  },
+  secureIcon: { fontSize: 26 },
+  secureLabel: { fontSize: 13, fontWeight: "700", color: colors.foreground, marginTop: spacing.sm, textAlign: "center" },
+  secureDesc: { fontSize: 11, color: colors.foregroundMuted, marginTop: 2 },
   summaryCard: { marginBottom: spacing.lg },
   summaryRow: { flexDirection: "row", justifyContent: "space-around" },
   summaryGreen: { color: colors.safe, fontWeight: "700", fontSize: 13 },

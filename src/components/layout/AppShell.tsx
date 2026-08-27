@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Activity, AlertTriangle, MapPin, Settings, Users } from "lucide-react";
+import { Activity, AlertTriangle, MapPin, Settings, ShieldCheck, Users } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -10,12 +10,14 @@ const NAV_ITEMS = [
   { to: "/", label: "Nabız", Icon: Activity },
   { to: "/cevrem", label: "Çevrem", Icon: Users },
   { to: "/deprem", label: "Deprem", Icon: MapPin },
+  { to: "/guvenli", label: "Güvenli Mod", Icon: ShieldCheck },
   { to: "/ayarlar", label: "Ayarlar", Icon: Settings },
 ] as const;
 
 const MOBILE_NAV_ITEMS = [
   { to: "/", label: "Nabız", Icon: Activity },
   { to: "/cevrem", label: "Çevrem", Icon: Users },
+  { to: "/guvenli", label: "Güvenli Mod", Icon: ShieldCheck },
   { to: "/deprem", label: "Deprem", Icon: MapPin },
 ] as const;
 

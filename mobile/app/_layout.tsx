@@ -18,6 +18,8 @@ export default function RootLayout() {
         <Stack.Screen name="sos" options={{ presentation: "fullScreenModal" }} />
         <Stack.Screen name="quickcheck" options={{ presentation: "modal" }} />
         <Stack.Screen name="deprem" />
+        <Stack.Screen name="alzheimer" />
+        <Stack.Screen name="erisilebilirlik" />
         <Stack.Screen name="yasli" options={{ presentation: "fullScreenModal" }} />
       </Stack>
     </SafeAreaProvider>
