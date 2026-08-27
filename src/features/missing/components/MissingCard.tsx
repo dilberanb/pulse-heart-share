@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import { forwardRef, useState } from "react";
 import type { MissingProfile } from "@/features/missing/types";
 
 function initials(name: string) {
@@ -25,6 +25,9 @@ function todayTR() {
  */
 export const MissingCard = forwardRef<HTMLDivElement, { profile: MissingProfile }>(
   function MissingCard({ profile }, ref) {
+    const [imgFailed, setImgFailed] = useState(false);
+    const showPhoto = !!profile.photo && !imgFailed;
+
     return (
       <div
         ref={ref}
@@ -41,10 +44,17 @@ export const MissingCard = forwardRef<HTMLDivElement, { profile: MissingProfile 
         {/* Foto + temel bilgiler */}
         <div className="flex items-center gap-4 p-4">
           <div className="grid h-24 w-24 shrink-0 place-items-center overflow-hidden rounded-xl bg-slate-100 text-5xl">
-            {profile.photo ? (
-              <img src={profile.photo} alt={profile.name} className="h-full w-full object-cover" />
+            {showPhoto ? (
+              <img
+                src={profile.photo}
+                alt={profile.name}
+                onError={() => setImgFailed(true)}
+                className="h-full w-full object-cover"
+              />
             ) : (
-              profile.emoji ?? <span className="text-2xl font-bold text-slate-400">{initials(profile.name)}</span>
+              <span className="text-2xl font-bold text-slate-400">
+                {profile.emoji ?? initials(profile.name)}
+              </span>
             )}
           </div>
           <div className="min-w-0">

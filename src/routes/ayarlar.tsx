@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/layout/AppShell";
 import { Label } from "@/components/ui/label";
@@ -7,6 +7,7 @@ import { PrivacySelect } from "@/features/status/components/PrivacySelect";
 import { SosSheet } from "@/features/status/components/SosSheet";
 import { StatusComposer } from "@/features/status/components/StatusComposer";
 import { useAppStore } from "@/store/useAppStore";
+import { FileText, Shield } from "lucide-react";
 
 export const Route = createFileRoute("/ayarlar")({
   head: () => ({
@@ -62,6 +63,26 @@ function SettingsPage() {
               onCheckedChange={setOnlyActive}
             />
           </div>
+        </div>
+
+        <div className="space-y-2">
+          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            Yasal
+          </p>
+          <Link
+            to="/politikalar"
+            className="flex items-center gap-3 rounded-xl border border-border bg-card p-4 transition-colors hover:bg-accent"
+          >
+            <Shield className="h-5 w-5 text-primary" />
+            <span className="text-sm font-medium">Gizlilik Politikası</span>
+          </Link>
+          <Link
+            to="/kullanim-sartlari"
+            className="flex items-center gap-3 rounded-xl border border-border bg-card p-4 transition-colors hover:bg-accent"
+          >
+            <FileText className="h-5 w-5 text-primary" />
+            <span className="text-sm font-medium">Kullanım Şartları</span>
+          </Link>
         </div>
       </div>
 

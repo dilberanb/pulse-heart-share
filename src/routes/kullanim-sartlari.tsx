@@ -35,7 +35,7 @@ function TermsPage() {
           </div>
         </div>
 
-        <p className="text-sm text-muted-foreground">Son güncelleme: 26 Ağustos 2026</p>
+        <p className="text-sm text-muted-foreground">Son güncelleme: 27 Ağustos 2026</p>
 
         <section className="space-y-4">
           <h2 className="text-lg font-semibold text-foreground">1. Kabul</h2>
@@ -50,13 +50,14 @@ function TermsPage() {
           <h2 className="text-lg font-semibold text-foreground">2. Hizmet Tanımı</h2>
           <p className="text-sm leading-relaxed text-muted-foreground">
             Nabız, duygusal, bedensel ve durumsal hâlinizi seçtiğiniz kişilerle paylaşmanızı sağlayan
-            bir mobil ve web uygulamasıdır. Uygulama aşağıdaki temel özellikleri sunar:
+            bir web (ve yakında mobil) uygulamasıdır. Uygulama aşağıdaki temel özellikleri sunar:
           </p>
           <ul className="list-inside list-disc space-y-2 text-sm text-muted-foreground">
-            <li>Mikro-durum paylaşımları (100+ durum seçeneği).</li>
+            <li>Durum (mikro-durum) paylaşımları ve hızlı yoklama (quickcheck) soruları.</li>
             <li>Gizlilik çemberleri ile paylaşım kontrolü.</li>
-            <li>Acil durum (SOS) bildirimi gönderme.</li>
-            <li>Bağlantı ağı ve çevre yönetimi.</li>
+            <li>Acil durum (SOS) butonu — konum ve yardım çağrısı.</li>
+            <li>Yol arkadaşlığı, "Beni Eve Götür", yaşlı ve evcil hayvan güvenlik modları.</li>
+            <li>Kayıp ilanı ve paylaşıma hazır kimlik kartı.</li>
           </ul>
         </section>
 
@@ -95,9 +96,10 @@ function TermsPage() {
         <section className="space-y-4">
           <h2 className="text-lg font-semibold text-foreground">6. Hesap Askıya Alma ve Sonlandırma</h2>
           <p className="text-sm leading-relaxed text-muted-foreground">
-            Bu şartları ihlal eden kullanıcıların hesapları haber verilmeksizin askıya alınabilir
-            veya sonlandırılabilir. Hesabınızı dilediğiniz zaman Ayarlar sayfasından
-            silebilirsiniz.
+            Bu şartları ihlal eden kullanıcıların hizmeti haber verilmeksizin kısıtlanabilir veya
+            sonlandırılabilir. Demo sürümünde hesap ve paylaşım verileri sunucuda tutulmadığından,
+            cihazdaki verilerini tarayıcı geçmişini/uygulama verisini temizleyerek ya da ilgili
+            işlevde paylaşımı iptal ederek silmiş olursun.
           </p>
         </section>
 
