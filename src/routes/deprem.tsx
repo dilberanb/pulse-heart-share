@@ -81,12 +81,14 @@ function DepremPage() {
           <h3 className="text-sm font-semibold text-foreground">Acil Durum Numaraları</h3>
 
           <div className="space-y-2">
-            <ContactRow name="AFAD" number="122" />
-            <ContactRow name="AKUT" number="444 25 88" />
-            <ContactRow name="İtfaiye" number="110" />
-            <ContactRow name="Polis" number="155" />
-            <ContactRow name="Ambulans" number="112" />
+            <ContactRow name="Acil Durum — Tümü (112)" number="112" highlight />
+            <ContactRow name="AFAD — Afet ve Acil Durum" number="122" />
+            <ContactRow name="AKUT — Arama Kurtarma" number="444 25 88" />
+            <ContactRow name="ALO 183 — Sosyal Destek" number="183" />
           </div>
+          <p className="mt-2 text-xs text-muted-foreground">
+            Ambulans, polis, itfaiye ve deprem ihbarları artık tek numara olan <span className="font-semibold text-primary">112</span>'ye yönlendirilir.
+          </p>
         </div>
       </div>
     </AppShell>
@@ -138,11 +140,11 @@ function ChecklistItem({ label, checked }: { label: string; checked: boolean }) 
   );
 }
 
-function ContactRow({ name, number }: { name: string; number: string }) {
+function ContactRow({ name, number, highlight }: { name: string; number: string; highlight?: boolean }) {
   return (
-    <div className="flex items-center justify-between rounded-lg bg-muted/30 px-3 py-2">
+    <div className={`flex items-center justify-between rounded-lg px-3 py-2 ${highlight ? "bg-primary/10 ring-1 ring-primary/30" : "bg-muted/30"}`}>
       <span className="text-sm font-medium text-foreground">{name}</span>
-      <span className="text-sm text-primary font-mono">{number}</span>
+      <span className={`text-sm font-mono ${highlight ? "font-bold text-primary" : "text-primary"}`}>{number}</span>
     </div>
   );
 }

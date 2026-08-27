@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { AlertTriangle, Clock, MapPin, Phone, Volume2, X } from "lucide-react";
+import { AlertTriangle, MapPin, Phone, Volume2, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -8,12 +8,13 @@ import {
 } from "@/components/ui/sheet";
 import { usePublishStatus } from "@/features/status/hooks/useStatusFeed";
 import { useAppStore } from "@/store/useAppStore";
+import { useLongPress } from "@/hooks/useLongPress";
 
 const EMERGENCY_NUMBERS = [
-  { id: "112", label: "112", desc: "Jandarma / Emniyet / İtfaiye / Ambulans", phone: "112" },
-  { id: "155", label: "155", desc: "Polis İhbar", phone: "155" },
-  { id: "156", label: "156", desc: "Jandarma İhbar", phone: "156" },
-  { id: "afad", label: "AFAD", desc: "Afet ve Acil Durum", phone: "122" },
+  { id: "112", label: "112", desc: "Tüm acil durumlar (tek hat)", phone: "112", primary: true },
+  { id: "afad", label: "AFAD", desc: "Afet ve Acil Durum", phone: "122", primary: false },
+  { id: "alo183", label: "ALO 183", desc: "Sosyal Destek Hattı", phone: "183", primary: false },
+  { id: "kades", label: "KADES", desc: "Kadın Acil Destek", phone: "183", primary: false },
 ];
 
 export function SosSheet() {
@@ -102,6 +103,13 @@ export function SosSheet() {
     );
   }
 
+  // SOS tetikleme butonu uzun basma (1.5s) korumalı — yanlışlıkla basmayı önler
+  const sosPress = useLongPress({
+    onTrigger: () => startCountdown(),
+    duration: 1500,
+    disabled: countdown !== null || activated,
+  });
+
   return (
     <Sheet open={isOpen} onOpenChange={(open) => (open ? undefined : closeSos())}>
       <SheetContent
@@ -113,7 +121,7 @@ export function SosSheet() {
           <div className="flex items-center justify-between px-5 py-4">
             <div className="flex items-center gap-2.5">
               <AlertTriangle className="h-5 w-5" />
-              <span className="text-sm font-bold uppercase tracking-widest">ACİL DURUM</span>
+              <span className="text-sm font-bold uppercase tracking-widest">Güvenlik Merkezi</span>
             </div>
             <button
               type="button"
@@ -155,22 +163,22 @@ export function SosSheet() {
                       <span className="text-6xl font-bold">{countdown}</span>
                     </div>
                     <p className="text-base font-medium opacity-80">
-                      Acil durum bildirimi gönderilecek
+                      Sakin ol — bildirimi iptal edebilirsin
                     </p>
                     <Button
                       variant="outline"
                       onClick={cancelCountdown}
                       className="h-12 rounded-xl border-2 border-white/30 bg-transparent text-base font-semibold text-white hover:bg-white/10"
                     >
-                      İptal
+                      İptal Et — Yanlışlıkla bastım
                     </Button>
                   </div>
                 ) : (
                   <>
-                    <div className="mb-2 text-6xl pulse-sos">🆘</div>
-                    <h2 className="mb-2 text-center text-2xl font-bold">Acil Durum</h2>
+                    <div className="mb-2 text-6xl pulse-sos">🫀</div>
+                    <h2 className="mb-2 text-center text-2xl font-bold">Güvenlik Merkezi</h2>
                     <p className="mb-8 text-center text-sm opacity-75">
-                      Numarayı seçerek hemen ara, ya da konumunu paylaş.
+                      Her şey kontrol altında. Acil bir durumda 112'yi ara, ya da konumunu paylaş.
                     </p>
 
                     {/* Acil numaralar */}
@@ -180,11 +188,15 @@ export function SosSheet() {
                           key={num.id}
                           type="button"
                           onClick={() => handleCall(num.phone)}
-                          className="flex flex-col items-center gap-1 rounded-xl border-2 border-white/25 bg-white/10 px-4 py-5 transition-colors hover:bg-white/20 active:scale-[0.97]"
+                          className={`flex flex-col items-center gap-1 rounded-xl border-2 px-4 py-5 transition-colors hover:bg-white/20 active:scale-[0.97] ${
+                            num.primary
+                              ? "border-white bg-white text-sos"
+                              : "border-white/25 bg-white/10"
+                          }`}
                         >
-                          <Phone className="mb-1 h-5 w-5 opacity-70" />
-                          <span className="text-2xl font-bold">{num.label}</span>
-                          <span className="text-[11px] opacity-60">{num.desc}</span>
+                          <Phone className={`mb-1 h-5 w-5 ${num.primary ? "text-sos" : "opacity-70"}`} />
+                          <span className={`text-2xl font-bold ${num.primary ? "text-sos" : ""}`}>{num.label}</span>
+                          <span className={`text-[11px] ${num.primary ? "opacity-70" : "opacity-60"}`}>{num.desc}</span>
                         </button>
                       ))}
                     </div>
@@ -209,17 +221,31 @@ export function SosSheet() {
                       </button>
                     </div>
 
-                    {/* Ana tetikleme butonu */}
+                    {/* Ana tetikleme butonu — 1.5s basılı tut */}
                     <div className="mt-8 w-full">
-                      <Button
-                        onClick={startCountdown}
-                        className="h-14 w-full rounded-xl bg-white text-lg font-bold text-sos hover:bg-white/90"
+                      <button
+                        type="button"
+                        onPointerDown={sosPress.start}
+                        onPointerUp={sosPress.end}
+                        onPointerLeave={sosPress.end}
+                        onPointerCancel={sosPress.end}
+                        className="relative h-14 w-full overflow-hidden rounded-xl bg-white text-lg font-bold text-sos"
                       >
-                        <AlertTriangle className="mr-2 h-5 w-5" />
-                        Acil Durum Bildir
-                      </Button>
+                        {sosPress.isPressing && (
+                          <span
+                            className="absolute inset-y-0 left-0 bg-black/15"
+                            style={{ width: `${sosPress.progress * 100}%` }}
+                          />
+                        )}
+                        <span className="relative z-10 flex items-center justify-center">
+                          <AlertTriangle className="mr-2 h-5 w-5" />
+                          {sosPress.isPressing
+                            ? `${Math.round(sosPress.progress * 100)}% — bırakma...`
+                            : "Acil Durum Bildir (basılı tut)"}
+                        </span>
+                      </button>
                       <p className="mt-3 text-center text-xs opacity-50">
-                        Tüm çemberlerine anında bildirim gönderilir
+                        Yanlışlıkla basmayı önlemek için 1.5 saniye basılı tut
                       </p>
                     </div>
                   </>
@@ -234,21 +260,35 @@ export function SosSheet() {
                   </div>
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold">Bildirim Gönderildi</h2>
+                  <h2 className="text-2xl font-bold">Sakin ol, yardım yolda</h2>
                   <p className="mt-2 text-sm opacity-75">
-                    Acil durum bildiriminiz tüm çemberlerinize iletildi.
+                    Acil durum bildirimin tüm çemberlerine iletildi. Aşağıdaki adımlardan yardım alabilirsin.
                   </p>
                 </div>
-                <div className="flex items-center gap-2 text-sm opacity-60">
-                  <Clock className="h-4 w-4" />
-                  <span>Şimdi paylaşılıyor…</span>
+                <div className="grid w-full grid-cols-2 gap-3">
+                  <button
+                    type="button"
+                    onClick={handleShareLocation}
+                    className="flex flex-col items-center gap-1.5 rounded-xl border-2 border-white/25 bg-white/10 px-4 py-4 transition-colors hover:bg-white/20"
+                  >
+                    <MapPin className="h-5 w-5 opacity-70" />
+                    <span className="text-sm font-semibold">Konumumu Paylaş</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleCall("112")}
+                    className="flex flex-col items-center gap-1.5 rounded-xl border-2 border-white bg-white px-4 py-4 transition-colors hover:bg-white/90"
+                  >
+                    <Phone className="h-5 w-5 text-sos" />
+                    <span className="text-sm font-semibold text-sos">112'yi Ara</span>
+                  </button>
                 </div>
                 <Button
                   onClick={closeSos}
                   variant="outline"
-                  className="mt-4 h-12 rounded-xl border-2 border-white/30 bg-transparent text-base font-semibold text-white hover:bg-white/10"
+                  className="mt-2 h-12 rounded-xl border-2 border-white/30 bg-transparent text-base font-semibold text-white hover:bg-white/10"
                 >
-                  Kapat
+                  Ben Güvendeyim — Durdur
                 </Button>
               </div>
             )}
