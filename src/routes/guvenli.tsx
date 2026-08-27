@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Brain, Accessibility, PawPrint, Users, ArrowRight } from "lucide-react";
+import { Brain, Accessibility, PawPrint, Users, Route as RouteIcon, ArrowRight } from "lucide-react";
 
 import { AppShell } from "@/components/layout/AppShell";
 import { MemoryMode } from "@/features/memory/components/MemoryMode";
 import { AccessibilityMode } from "@/features/accessibility/components/AccessibilityMode";
 import { PetStatus } from "@/features/status/components/PetStatus";
+import { SafeCompanion } from "@/features/companion/components/SafeCompanion";
+import { SeniorMode } from "@/features/elderly/components/SeniorMode";
 import { useAppStore } from "@/store/useAppStore";
 import { cn } from "@/lib/utils";
 
@@ -23,12 +25,13 @@ export const Route = createFileRoute("/guvenli")({
   component: GuvenliPage,
 });
 
-type TabKey = "memory" | "access" | "pet" | "senior";
+type TabKey = "memory" | "access" | "pet" | "companion" | "senior";
 
 const TABS: { key: TabKey; label: string; icon: typeof Brain }[] = [
   { key: "memory", label: "Hafıza Desteği", icon: Brain },
   { key: "access", label: "Erişilebilirlik", icon: Accessibility },
   { key: "pet", label: "Evcil Hayvan", icon: PawPrint },
+  { key: "companion", label: "Yol Arkadaşlığı", icon: RouteIcon },
   { key: "senior", label: "Yaşlı Modu", icon: Users },
 ];
 
@@ -118,6 +121,17 @@ function GuvenliPage() {
             </div>
           )}
 
+          {tab === "companion" && (
+            <div className="space-y-4">
+              <SectionIntro
+                icon={<RouteIcon className="h-5 w-5 text-violet-400" />}
+                title="Güvenli Yol Arkadaşı"
+                desc="Gece eve dönerken ya da kaygılı olduğunda, güvendiğin kişilere sınırlı süreli canlı konum paylaş."
+              />
+              <SafeCompanion />
+            </div>
+          )}
+
           {tab === "senior" && (
             <div className="space-y-4">
               <SectionIntro
@@ -128,7 +142,7 @@ function GuvenliPage() {
               <div className="rounded-xl border border-border bg-card p-5 text-center">
                 <p className="mb-1 text-lg font-bold text-foreground">Büyük Buton Modu</p>
                 <p className="mb-4 text-sm text-muted-foreground">
-                  Etkinleştirildiğinde uygulama tam ekran, üç büyük butonlu sade moda geçer:
+                  Etkinleştirildiğinde tam ekran, üç büyük butonlu sade moda geçer:
                   Güvendeyim, Yardım Lazım, Ailemi Ara.
                 </p>
                 <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-center">
@@ -156,12 +170,15 @@ function GuvenliPage() {
                 </div>
                 <p className="mt-3 text-xs text-muted-foreground">
                   {seniorMode
-                    ? "Yaşlı modu aktif. Kapatmak için ayarlar sekmesini kullan."
-                    : "Not: Yaşlı modu görünümü geliştirme aşamasında; kısa süre içinde aktif olacak."}
+                    ? "Yaşlı modu aktif. Çıkmak için ekrandaki güç düğmesini kullan."
+                    : "Yaşlı Modunu Aç'a basınca, gerçek büyük butonlu tam ekran modu burada çalışır."}
                 </p>
               </div>
             </div>
           )}
+
+          {/* Yaşlı modu tam ekran render */}
+          {seniorMode && <SeniorMode onExit={() => setSeniorMode(false)} />}
         </div>
       </div>
     </AppShell>
