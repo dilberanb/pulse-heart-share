@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { MapPin, AlertTriangle, Shield, Radio } from "lucide-react";
 
@@ -16,7 +17,121 @@ export const Route = createFileRoute("/deprem")({
   component: DepremPage,
 });
 
+const CHECKLIST_STORAGE = "nabiz:deprem:checklist";
+const STATUS_STORAGE = "nabiz:deprem:status";
+
+const CHECKLIST_ITEMS = [
+  "Acil durum çantası hazır mı?",
+  "Tahliye rotası belirlendi mi?",
+  "Aile üyeleri bilgilendirildi mi?",
+  "Toplanma alanı konuşuldu mu?",
+  "Gaz vanası kapatma tatbikatı yapıldı mı?",
+];
+
+type StatusKey = "canta" | "tahliye" | "toplanma" | "aile";
+type StatusValue = "hazir" | "yok" | "bekliyor";
+
+const STATUS_ITEMS: {
+  key: StatusKey;
+  icon: React.ReactNode;
+  label: string;
+  options: { value: StatusValue; label: string; color: string }[];
+}[] = [
+  {
+    key: "canta",
+    icon: <Shield className="h-5 w-5 text-emerald-400" />,
+    label: "Çantam",
+    options: [
+      { value: "hazir", label: "Hazır", color: "emerald" },
+      { value: "bekliyor", label: "Hazırlanıyor", color: "amber" },
+      { value: "yok", label: "Yok", color: "red" },
+    ],
+  },
+  {
+    key: "tahliye",
+    icon: <AlertTriangle className="h-5 w-5 text-amber-400" />,
+    label: "Tahliye Planı",
+    options: [
+      { value: "hazir", label: "Belirlendi", color: "emerald" },
+      { value: "bekliyor", label: "Planlanıyor", color: "amber" },
+      { value: "yok", label: "Yok", color: "red" },
+    ],
+  },
+  {
+    key: "toplanma",
+    icon: <Radio className="h-5 w-5 text-blue-400" />,
+    label: "Toplanma Alanı",
+    options: [
+      { value: "hazir", label: "Beklerim", color: "emerald" },
+      { value: "bekliyor", label: "Araştırılıyor", color: "amber" },
+      { value: "yok", label: "Bilinmiyor", color: "red" },
+    ],
+  },
+  {
+    key: "aile",
+    icon: <MapPin className="h-5 w-5 text-purple-400" />,
+    label: "Aile Bilgileri",
+    options: [
+      { value: "hazir", label: "Tamamlandı", color: "emerald" },
+      { value: "bekliyor", label: "Derleniyor", color: "amber" },
+      { value: "yok", label: "Eksik", color: "red" },
+    ],
+  },
+];
+
+const DEFAULT_STATUS: Record<StatusKey, StatusValue> = {
+  canta: "hazir",
+  tahliye: "hazir",
+  toplanma: "hazir",
+  aile: "hazir",
+};
+
+function loadJSON<T>(key: string, fallback: T): T {
+  if (typeof window === "undefined") return fallback;
+  try {
+    const raw = window.localStorage.getItem(key);
+    return raw ? (JSON.parse(raw) as T) : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
 function DepremPage() {
+  const [checklist, setChecklist] = useState<boolean[]>(() =>
+    loadJSON(CHECKLIST_STORAGE, [true, true, false, false, false]),
+  );
+  const [status, setStatus] = useState<Record<StatusKey, StatusValue>>(() =>
+    loadJSON(STATUS_STORAGE, DEFAULT_STATUS),
+  );
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(CHECKLIST_STORAGE, JSON.stringify(checklist));
+    } catch {
+      /* depolama kullanılamıyorsa sessizce geç */
+    }
+  }, [checklist]);
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(STATUS_STORAGE, JSON.stringify(status));
+    } catch {
+      /* depolama kullanılamıyorsa sessizce geç */
+    }
+  }, [status]);
+
+  function toggleItem(i: number) {
+    setChecklist((prev) => {
+      const next = [...prev];
+      next[i] = !next[i];
+      return next;
+    });
+  }
+
+  function setStatusKey(key: StatusKey, value: StatusValue) {
+    setStatus((prev) => ({ ...prev, [key]: value }));
+  }
+
   return (
     <AppShell>
       <div className="space-y-6">
@@ -33,47 +148,42 @@ function DepremPage() {
           </div>
         </div>
 
-        {/* Preparation Status */}
+        {/* Hazırlık Durumu */}
         <div className="rounded-xl border border-border bg-card p-4 space-y-4">
-          <h3 className="text-sm font-semibold text-foreground">Hazırlık Durumu</h3>
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-semibold text-foreground">Hazırlık Durumu</h3>
+            <span className="text-xs text-muted-foreground">Duruma dokunarak güncelle</span>
+          </div>
 
           <div className="grid grid-cols-2 gap-3">
-            <StatusCard
-              icon={<Shield className="h-5 w-5 text-emerald-400" />}
-              label="Çantam"
-              value="Hazır"
-              color="emerald"
-            />
-            <StatusCard
-              icon={<AlertTriangle className="h-5 w-5 text-amber-400" />}
-              label="Tahliye Planı"
-              value="Belirlendi"
-              color="amber"
-            />
-            <StatusCard
-              icon={<Radio className="h-5 w-5 text-blue-400" />}
-              label="Toplanma Alanı"
-              value="Yakın"
-              color="blue"
-            />
-            <StatusCard
-              icon={<MapPin className="h-5 w-5 text-purple-400" />}
-              label="Aile Bílgileri"
-              value="Tamamlandı"
-              color="purple"
-            />
+            {STATUS_ITEMS.map((item) => (
+              <StatusCard
+                key={item.key}
+                icon={item.icon}
+                label={item.label}
+                options={item.options}
+                value={status[item.key]}
+                onChange={(v) => setStatusKey(item.key, v)}
+              />
+            ))}
           </div>
         </div>
 
         {/* Checklist */}
         <div className="rounded-xl border border-border bg-card p-4 space-y-3">
           <h3 className="text-sm font-semibold text-foreground">Deprem Checklist</h3>
+          <p className="text-xs text-muted-foreground">
+            Tamamladıklarını işaretle; seçimlerin cihazında kaydedilir.
+          </p>
 
-          <ChecklistItem label="Acil durum çantası hazır mı?" checked />
-          <ChecklistItem label="Tahliye rotası belirlendi mi?" checked />
-          <ChecklistItem label="Aile üyeleri bilgilendirildi mi?" checked={false} />
-          <ChecklistItem label="Toplanma alanı konuşuldu mu?" checked={false} />
-          <ChecklistItem label="Gaz vanası kapatma tatbikatı yapıldı mı?" checked={false} />
+          {CHECKLIST_ITEMS.map((label, i) => (
+            <ChecklistItem
+              key={label}
+              label={label}
+              checked={checklist[i] ?? false}
+              onChange={() => toggleItem(i)}
+            />
+          ))}
         </div>
 
         {/* Emergency contacts */}
@@ -87,7 +197,8 @@ function DepremPage() {
             <ContactRow name="ALO 183 — Sosyal Destek" number="183" />
           </div>
           <p className="mt-2 text-xs text-muted-foreground">
-            Ambulans, polis, itfaiye ve deprem ihbarları artık tek numara olan <span className="font-semibold text-primary">112</span>'ye yönlendirilir.
+            Ambulans, polis, itfaiye ve deprem ihbarları artık tek numara olan{" "}
+            <span className="font-semibold text-primary">112</span>'ye yönlendirilir.
           </p>
         </div>
       </div>
@@ -95,42 +206,69 @@ function DepremPage() {
   );
 }
 
+const COLOR_BORDER: Record<string, string> = {
+  emerald: "border-emerald-500/20 bg-emerald-500/5",
+  amber: "border-amber-500/20 bg-amber-500/5",
+  blue: "border-blue-500/20 bg-blue-500/5",
+  purple: "border-purple-500/20 bg-purple-500/5",
+  red: "border-red-500/20 bg-red-500/5",
+};
+
 function StatusCard({
   icon,
   label,
   value,
-  color,
+  options,
+  onChange,
 }: {
   icon: React.ReactNode;
   label: string;
   value: string;
-  color: "emerald" | "amber" | "blue" | "purple";
+  options: { value: string; label: string; color: string }[];
+  onChange: (value: StatusValue) => void;
 }) {
-  const colorMap = {
-    emerald: "border-emerald-500/20 bg-emerald-500/5",
-    amber: "border-amber-500/20 bg-amber-500/5",
-    blue: "border-blue-500/20 bg-blue-500/5",
-    purple: "border-purple-500/20 bg-purple-500/5",
-  };
-
+  const current = options.find((o) => o.value === value) ?? options[0]!;
   return (
-    <div className={`rounded-lg border p-3 ${colorMap[color]}`}>
+    <div className={`rounded-lg border p-3 ${COLOR_BORDER[current.color] ?? ""}`}>
       <div className="flex items-center gap-2">
         {icon}
         <span className="text-xs text-muted-foreground">{label}</span>
       </div>
-      <p className="mt-1.5 text-sm font-semibold text-foreground">{value}</p>
+      <div className="mt-1.5 flex flex-wrap gap-1.5">
+        {options.map((o) => (
+          <button
+            key={o.value}
+            type="button"
+            onClick={() => onChange(o.value as StatusValue)}
+            className={`rounded-full px-2.5 py-1 text-xs font-semibold transition-colors ${
+              o.value === value
+                ? "bg-primary text-primary-foreground"
+                : "bg-muted text-muted-foreground hover:bg-muted/60"
+            }`}
+          >
+            {o.label}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
 
-function ChecklistItem({ label, checked }: { label: string; checked: boolean }) {
+function ChecklistItem({
+  label,
+  checked,
+  onChange,
+}: {
+  label: string;
+  checked: boolean;
+  onChange: () => void;
+}) {
   return (
     <label className="flex items-center gap-3 rounded-lg px-2 py-1.5 transition-colors hover:bg-muted/30 cursor-pointer">
       <input
         type="checkbox"
         checked={checked}
-        readOnly
+        onChange={onChange}
         className="h-4 w-4 rounded border-border accent-primary"
       />
       <span className={`text-sm ${checked ? "text-muted-foreground line-through" : "text-foreground"}`}>
@@ -142,9 +280,15 @@ function ChecklistItem({ label, checked }: { label: string; checked: boolean }) 
 
 function ContactRow({ name, number, highlight }: { name: string; number: string; highlight?: boolean }) {
   return (
-    <div className={`flex items-center justify-between rounded-lg px-3 py-2 ${highlight ? "bg-primary/10 ring-1 ring-primary/30" : "bg-muted/30"}`}>
+    <div
+      className={`flex items-center justify-between rounded-lg px-3 py-2 ${
+        highlight ? "bg-primary/10 ring-1 ring-primary/30" : "bg-muted/30"
+      }`}
+    >
       <span className="text-sm font-medium text-foreground">{name}</span>
-      <span className={`text-sm font-mono ${highlight ? "font-bold text-primary" : "text-primary"}`}>{number}</span>
+      <span className={`text-sm font-mono ${highlight ? "font-bold text-primary" : "text-primary"}`}>
+        {number}
+      </span>
     </div>
   );
 }
