@@ -7,10 +7,33 @@
 
 let cachedVoices: SpeechSynthesisVoice[] | null = null;
 
-/** Türkçe sesler için öncelik sıralaması (en iyiden en kötüye). */
+/**
+ * Türkçe sesler için öncelik sıralaması (en doğal/neural'den en robotiğe).
+ * - "Microsoft"/"OneCore" sesleri (Tolga Natural, Aylin Natural...) gerçek neural'dir
+ *   ve yalnızca Edge'de listelenir.
+ * - Google'ın eski yerleşik Türkçe sesi robotik "teneke" tında olduğu için en sonda tutulur.
+ */
 const TURKISH_VOICE_PRIORITY = [
+  // Microsoft/Edge doğal neural sesler
+  "microsoft",
+  "edge",
+  "onecore",
+  "tolga natural",
+  "aylin natural",
+  "dila natural",
+  // macOS/iOS doğal (Siri ailesi) sesler
+  "neural",
+  "natural",
+  "enhanced",
+  "premium",
+  "online",
+  "multilingual",
+  "onnx",
+  "siri",
+  "arlet",
+  "zikra",
+  // Tolga/Aylin genel (V110 yerli model)
   "tolga",
-  "megatron2",
   "aylin",
   "dila",
   "ecem",
@@ -20,6 +43,12 @@ const TURKISH_VOICE_PRIORITY = [
   "turkish",
   "tr",
 ];
+
+/**
+ * Doğal/neural Türkçe sesi seçer. Chrome'da birden çok ses listeleniyorsa
+ * Microsoft/Edge doğal seslerini öne alır; yalnızca eski "Google Türkçe"
+ * varsa onu kullanır (Chrome'un limiti budur).
+ */
 
 function loadVoices(): SpeechSynthesisVoice[] {
   if (!("speechSynthesis" in window)) return [];
@@ -38,32 +67,39 @@ export function pickTurkishVoice(): SpeechSynthesisVoice | null {
   if (!turkish.length) return null;
 
   // Öncelik sırasına göre sırala
-  const ranked = [...turkish].sort((a, b) => {
-    const aname = (a.name || "").toLowerCase();
-    const bname = (b.name || "").toLowerCase();
-    const ai = TURKISH_VOICE_PRIORITY.findIndex((k) => aname.includes(k));
-    const bi = TURKISH_VOICE_PRIORITY.findIndex((k) => bname.includes(k));
-    return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
-  });
+  const score = (v: SpeechSynthesisVoice): number => {
+    const name = (v.name ?? "").toLowerCase();
+    for (let i = 0; i < TURKISH_VOICE_PRIORITY.length; i++) {
+      const key = TURKISH_VOICE_PRIORITY[i];
+      if (key && name.includes(key) && i > 0) return i;
+    }
+    return 999;
+  };
+  const ranked = [...turkish].sort((a, b) => score(a) - score(b));
 
-  // Doğal (neural) sesleri öne al
-  const natural = ranked.find(
-    (v) =>
-      /(natural|online|neural|premium|multilingual|online\(natural\))/i.test(
-        v.name,
-      ),
-  );
-  return natural ?? ranked[0] ?? null;
+  return ranked[0] ?? null;
 }
 
 /** Tarayıcı sesleri yüklenince çalışacak bir dinleyici kurar (React mount'ta çağır). */
 export function primeTurkishVoices() {
   if (!("speechSynthesis" in window)) return;
-  // Bazı tarayıcılar getVoices() asenkron doldurur
-  window.speechSynthesis.getVoices();
-  window.speechSynthesis.onvoiceschanged = () => {
+  const refresh = () => {
     cachedVoices = window.speechSynthesis.getVoices();
   };
+  // Bazı tarayıcılar getVoices()'i asenkron doldurur / onvoiceschanged tetiklemez
+  window.speechSynthesis.onvoiceschanged = refresh;
+  refresh();
+
+  // Chrome bug'ı: onvoiceschanged bazen hiç çalışmaz -> kısa süreli poll fallback
+  const tries = 8;
+  let count = 0;
+  const timer = window.setInterval(() => {
+    count += 1;
+    refresh();
+    if (cachedVoices?.length || count >= tries) {
+      window.clearInterval(timer);
+    }
+  }, 150);
 }
 
 export interface SpeakOptions {
