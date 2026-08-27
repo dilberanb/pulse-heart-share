@@ -25,7 +25,7 @@ const emptyReactions = (): Record<ReactionKind, number> => ({ hug: 0, heart: 0, 
 
 export const CURRENT_USER: Person = {
   id: "me",
-  name: "Sen",
+  name: "Dilos",
   relation: "Ben",
   circle: "inner",
 };

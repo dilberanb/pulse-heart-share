@@ -80,7 +80,7 @@ let checkHistory: QuickCheck[] = [
   {
     id: "qc-1",
     senderId: "me",
-    senderName: "Sen",
+    senderName: "Dilos",
     receiverId: "p1",
     receiverName: "Ayşe Yılmaz",
     questionType: "how_are_you",
@@ -102,7 +102,7 @@ let checkHistory: QuickCheck[] = [
   {
     id: "qc-2",
     senderId: "me",
-    senderName: "Sen",
+    senderName: "Dilos",
     receiverId: "p4",
     receiverName: "Zeynep Kaya",
     questionType: "are_you_safe",
@@ -126,7 +126,7 @@ let checkHistory: QuickCheck[] = [
     senderId: "p3",
     senderName: "Elif Yılmaz",
     receiverId: "me",
-    receiverName: "Sen",
+    receiverName: "Dilos",
     questionType: "are_you_available",
     status: "answered",
     response: {
@@ -146,7 +146,7 @@ let checkHistory: QuickCheck[] = [
   {
     id: "qc-4",
     senderId: "me",
-    senderName: "Sen",
+    senderName: "Dilos",
     receiverId: "p6",
     receiverName: "Can Demir",
     questionType: "pet_needs",
@@ -156,7 +156,7 @@ let checkHistory: QuickCheck[] = [
   {
     id: "qc-5",
     senderId: "me",
-    senderName: "Sen",
+    senderName: "Dilos",
     receiverId: "p3",
     receiverName: "Elif Yılmaz",
     questionType: "how_are_you",
@@ -196,7 +196,7 @@ export async function sendQuickCheck(
   const check: QuickCheck = {
     id: `qc-${Date.now()}`,
     senderId: "me",
-    senderName: "Sen",
+    senderName: "Dilos",
     receiverId,
     receiverName,
     questionType,

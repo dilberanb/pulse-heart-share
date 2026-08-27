@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { CheckCircle, Loader2, MoreHorizontal, X } from "lucide-react";
+import { CheckCircle, Loader2, MessageCircle, MoreHorizontal, Smartphone, X } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import {
   QUICK_CHECK_QUESTIONS,
   QUICK_CHECK_OTHER_QUESTIONS,
+  QUESTION_TYPE_LABELS,
 } from "@/features/quickcheck/data/questions";
 import { useSendQuickCheck } from "@/features/quickcheck/hooks/useQuickCheck";
 import { initials } from "@/lib/time";
@@ -107,6 +108,33 @@ export function QuickCheckModal({ member, open, onOpenChange }: QuickCheckModalP
               <p className="text-xs text-muted-foreground">
                 {member.name} cevapladığında bildirim alacaksın.
               </p>
+
+              {sentQuestion && (
+                <div className="mt-4 w-full space-y-2 text-left">
+                  <p className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground">
+                    <Smartphone className="h-3.5 w-3.5" />
+                    Alıcının ekranında (simülasyon)
+                  </p>
+                  <div className="rounded-2xl border bg-background p-3 shadow-sm">
+                    <div className="flex items-start gap-2.5">
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-white">
+                        <MessageCircle className="h-4 w-4" />
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-sm font-bold leading-tight">Dilos sana bir soru sordu</p>
+                        <p className="mt-0.5 text-xs text-muted-foreground">
+                          {QUESTION_TYPE_LABELS[sentQuestion]}
+                        </p>
+                      </div>
+                      <span className="text-[10px] text-muted-foreground">şimdi</span>
+                    </div>
+                  </div>
+                  <p className="rounded-lg bg-muted/50 px-3 py-2 text-[11px] leading-relaxed text-muted-foreground">
+                    Bu, tek kişi test ettiğin için karşı tarafın telefonunda görünen sorudur. Gerçek
+                    uygulamada bildirim {member.name} cihazına düşer.
+                  </p>
+                </div>
+              )}
             </motion.div>
           ) : (
             <motion.div
