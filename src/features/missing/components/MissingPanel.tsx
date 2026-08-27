@@ -107,8 +107,12 @@ export function MissingPanel({ className }: { className?: string }) {
                     onClick={() => markMissing(p)}
                     className="flex items-center gap-2.5 rounded-xl border border-border p-2.5 text-left transition-colors hover:border-red-300 hover:bg-red-50/40"
                   >
-                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-muted text-xs font-bold">
-                      {initials(p.name)}
+                    <span className="h-10 w-10 shrink-0 overflow-hidden rounded-full bg-muted">
+                      <img
+                        src={p.photo}
+                        alt={p.name}
+                        className="h-full w-full rounded-full object-cover"
+                      />
                     </span>
                     <span className="min-w-0">
                       <span className="block truncate text-sm font-semibold">{p.name}</span>
@@ -133,8 +137,12 @@ export function MissingPanel({ className }: { className?: string }) {
                     onClick={() => markMissing(p)}
                     className="flex items-center gap-2.5 rounded-xl border border-border p-2.5 text-left transition-colors hover:border-red-300 hover:bg-red-50/40"
                   >
-                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-muted text-xl">
-                      {p.emoji}
+                    <span className="h-10 w-10 shrink-0 overflow-hidden rounded-full bg-muted">
+                      <img
+                        src={p.photo}
+                        alt={p.name}
+                        className="h-full w-full rounded-full object-cover"
+                      />
                     </span>
                     <span className="min-w-0">
                       <span className="block truncate text-sm font-semibold">{p.name}</span>

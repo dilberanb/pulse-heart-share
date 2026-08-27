@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Brain, Accessibility, PawPrint, Users, Route as RouteIcon, ArrowRight } from "lucide-react";
+import { Brain, Accessibility, PawPrint, Users, Route as RouteIcon, ShieldAlert, ArrowRight } from "lucide-react";
 
 import { AppShell } from "@/components/layout/AppShell";
 import { MemoryMode } from "@/features/memory/components/MemoryMode";
 import { AccessibilityMode } from "@/features/accessibility/components/AccessibilityMode";
 import { PetStatus } from "@/features/status/components/PetStatus";
 import { PetCarePanel } from "@/features/missing/components/PetCarePanel";
-import { MissingPanel } from "@/features/missing/components/MissingPanel";
 import { SafeCompanion } from "@/features/companion/components/SafeCompanion";
 import { SeniorMode } from "@/features/elderly/components/SeniorMode";
 import { useAppStore } from "@/store/useAppStore";
@@ -91,7 +90,7 @@ function GuvenliPage() {
                 desc="Karışıklık anında iletişim kurulabilmesi ve güvenlik için tasarlandı."
               />
               <MemoryMode />
-              <MissingPanel />
+              <MissingLinkCta />
             </div>
           )}
 
@@ -122,7 +121,7 @@ function GuvenliPage() {
                 }}
               />
               <PetCarePanel petName="Pamuk" />
-              <MissingPanel />
+              <MissingLinkCta />
             </div>
           )}
 
@@ -207,6 +206,30 @@ function SectionIntro({
       <div>
         <h3 className="text-sm font-bold text-foreground">{title}</h3>
         <p className="text-xs text-muted-foreground">{desc}</p>
+      </div>
+    </div>
+  );
+}
+
+function MissingLinkCta() {
+  return (
+    <div className="rounded-xl border border-dashed border-primary/40 bg-primary/5 p-5">
+      <div className="flex items-start gap-3">
+        <ShieldAlert className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+        <div className="flex-1">
+          <p className="text-sm font-bold text-foreground">Kayıp ilanı oluşturmak ister misin?</p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Aile üyesi ya da evcil hayvan kaybolduğunda, paylaşıma hazır kimlik kartı buradan ayrı
+            bir sayfada oluşturulur.
+          </p>
+          <Link
+            to="/kayip"
+            className="mt-3 inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
+          >
+            Kayıp İlanı Sayfasına Git
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
       </div>
     </div>
   );
