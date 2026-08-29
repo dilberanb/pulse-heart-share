@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import {
   Route,
   Clock,
@@ -12,7 +13,6 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { speakTurkish, stopSpeaking, primeTurkishVoices } from "@/features/memory/lib/tts";
 
 interface GuardContact {
   id: string;
@@ -46,13 +46,13 @@ export function SafeCompanion() {
   );
   const watchRef = useRef<number | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [welcome, setWelcome] = useState<string | null>(null);
+  const [parting, setParting] = useState<string | null>(null);
 
   useEffect(() => {
-    primeTurkishVoices();
     return () => {
       if (watchRef.current) navigator.geolocation.clearWatch(watchRef.current);
       if (timerRef.current) clearInterval(timerRef.current);
-      stopSpeaking();
     };
   }, []);
 
@@ -74,12 +74,9 @@ export function SafeCompanion() {
     setLastUpdate(null);
     const selected = contacts.filter((c) => (c as GuardContact & { selected?: boolean }).selected);
     const names = selected.map((c) => c.name.split(" (")[0]).join(", ");
-    speakTurkish(
-      `Güvenli yol arkadaşı aktif. ${names}${
-        names ? " ile" : " seçili kişilerle"
-      } canlı konumunuz paylaşılıyor. Yolculuğunuz güvenli olsun.`,
-      { rate: 0.9 },
-    );
+    setParting(null);
+    setWelcome("Başlatılıyor… Güvenli yolculuklar dileriz.");
+    setTimeout(() => setWelcome(null), 3200);
     if (selected.length > 0) {
       setLastUpdate(
         `Canlı konum paylaşılıyor → ${selected.map((c) => c.name.split(" (")[0]).join(", ")} (${durationMin} dk).`,
@@ -121,11 +118,12 @@ export function SafeCompanion() {
     if (timerRef.current) clearInterval(timerRef.current);
     timerRef.current = null;
     setActive(false);
+    setWelcome(null);
     if (reason === "Süre doldu") {
-      speakTurkish("Güvenli yol arkadaşı süresi doldu. Artık kimse konumunu göremiyor.", { rate: 0.9 });
       setLastUpdate("Süre doldu — paylaşım otomatik sonlandı. Artık kimse konumunu göremiyor.");
     } else if (reason === "varis") {
-      speakTurkish("Güvenle vardın. Konum paylaşımı sona erdi. İyi geceler.", { rate: 0.9 });
+      setParting("Varışını bildirdin — paylaşım sona erdi. İyi geceler.");
+      setTimeout(() => setParting(null), 3200);
       setLastUpdate("Varışı bildirdin — paylaşım sona erdi. Artık kimse konumunu göremiyor.");
     } else {
       setLastUpdate("Paylaşım durduruldu.");
@@ -285,6 +283,33 @@ export function SafeCompanion() {
           📍 {lastUpdate}
         </div>
       )}
+
+      <AnimatePresence>
+        {welcome && (
+          <motion.div
+            key="welcome"
+            initial={{ opacity: 0, y: 10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 260, damping: 22 }}
+            className="rounded-xl border border-violet-400/30 bg-violet-500/10 px-4 py-3 text-center"
+          >
+            <p className="text-sm font-semibold text-violet-200">{welcome}</p>
+          </motion.div>
+        )}
+        {parting && (
+          <motion.div
+            key="parting"
+            initial={{ opacity: 0, y: 10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 260, damping: 22 }}
+            className="rounded-xl border border-emerald-400/30 bg-emerald-500/10 px-4 py-3 text-center"
+          >
+            <p className="text-sm font-semibold text-emerald-200">{parting}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

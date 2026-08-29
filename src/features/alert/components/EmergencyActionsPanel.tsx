@@ -16,6 +16,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { EMERGENCY_ACTIONS, type EmergencyAction } from "@/features/alert/types";
 import { MOCK_PEOPLE } from "@/features/status/api/mockApi";
+import { VoiceCompanion } from "@/features/alert/components/VoiceCompanion";
 import { toast } from "sonner";
 
 interface SelectedPerson {
@@ -81,6 +82,9 @@ export function EmergencyActionsPanel({ className }: { className?: string }) {
       </CardHeader>
 
       <CardContent className="space-y-4">
+        {/* SESLİ KOMUT — Beni Eve Götür */}
+        <VoiceCompanion />
+
         {/* DURUM SEÇİMİ */}
         {!action && (
           <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
@@ -259,7 +263,7 @@ function ReceiverPreview({ action, people, includeLocation }: ReceiverPreviewPro
                     {action.label} bildirimi
                   </p>
                   <p className="mt-0.5 text-xs text-muted-foreground">
-                    {action.description} — {person.name} sana bir acil durum bildirimi gönderdi.
+                    {action.description} — Dilos sana bir acil durum bildirimi gönderdi.
                   </p>
                 </div>
               </div>

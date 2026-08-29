@@ -149,11 +149,6 @@ export function MemoryMode() {
 
   const startMissingAlert = () => {
     setMissing(true);
-    stopSpeaking();
-    speakTurkish(
-      `Dikkat, ${profile.name} kaybolmuş olabilir. ${profile.caregiverName} bilgilendiriliyor ve son konum paylaşılıyor.`,
-      { rate: 0.95 },
-    );
     setFeedback({ ok: true, text: `Kaybolma bildirimi ${profile.caregiverName}'ye gönderildi.` });
   };
 
