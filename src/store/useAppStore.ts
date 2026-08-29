@@ -1,7 +1,9 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 import type { PrivacyCircle } from "@/types/status";
 import type { QuickCheck } from "@/types/quickcheck";
+import type { UserProfile } from "@/types/profile";
 
 /**
  * Global istemci state'i (Zustand).
@@ -27,6 +29,10 @@ interface AppState {
   seniorMode: boolean;
   /** Aktif QuickCheck. */
   currentQuickCheck: QuickCheck | null;
+  /** Kullanıcının seçtiği profil tipi — arayüzü kişiselleştirir. */
+  profile: UserProfile;
+  /** Profil ile ilgili tercih; onboarding'in gösterilip gösterilmediği. */
+  profileOnboarded: boolean;
 
   setCircle: (circle: PrivacyCircle) => void;
   setOnlyActive: (onlyActive: boolean) => void;
@@ -40,32 +46,54 @@ interface AppState {
   setNotificationPreference: (preference: "bar" | "fullscreen") => void;
   setSeniorMode: (enabled: boolean) => void;
   setCurrentQuickCheck: (check: QuickCheck | null) => void;
+  setProfile: (profile: UserProfile) => void;
+  setProfileOnboarded: (onboarded: boolean) => void;
 }
 
-export const useAppStore = create<AppState>((set) => ({
-  circle: "everyone",
-  onlyActive: true,
-  defaultPrivacy: "close",
-  isComposerOpen: false,
-  isSosOpen: false,
-  isEmergencyOpen: false,
-  notificationPreference: "bar",
-  seniorMode: false,
-  currentQuickCheck: null,
+export const useAppStore = create<AppState>()(
+  persist(
+    (set) => ({
+      circle: "everyone",
+      onlyActive: true,
+      defaultPrivacy: "close",
+      isComposerOpen: false,
+      isSosOpen: false,
+      isEmergencyOpen: false,
+      notificationPreference: "bar",
+      seniorMode: false,
+      currentQuickCheck: null,
+      profile: "general",
+      profileOnboarded: false,
 
-  setCircle: (circle) => set({ circle }),
-  setOnlyActive: (onlyActive) => set({ onlyActive }),
-  setDefaultPrivacy: (defaultPrivacy) => set({ defaultPrivacy }),
-  openComposer: () => set({ isComposerOpen: true }),
-  closeComposer: () => set({ isComposerOpen: false }),
-  openSos: () => set({ isSosOpen: true }),
-  closeSos: () => set({ isSosOpen: false }),
-  openEmergency: () => set({ isEmergencyOpen: true }),
-  closeEmergency: () => set({ isEmergencyOpen: false }),
-  setNotificationPreference: (notificationPreference) => set({ notificationPreference }),
-  setSeniorMode: (seniorMode) => set({ seniorMode }),
-  setCurrentQuickCheck: (currentQuickCheck) => set({ currentQuickCheck }),
-}));
+      setCircle: (circle) => set({ circle }),
+      setOnlyActive: (onlyActive) => set({ onlyActive }),
+      setDefaultPrivacy: (defaultPrivacy) => set({ defaultPrivacy }),
+      openComposer: () => set({ isComposerOpen: true }),
+      closeComposer: () => set({ isComposerOpen: false }),
+      openSos: () => set({ isSosOpen: true }),
+      closeSos: () => set({ isSosOpen: false }),
+      openEmergency: () => set({ isEmergencyOpen: true }),
+      closeEmergency: () => set({ isEmergencyOpen: false }),
+      setNotificationPreference: (notificationPreference) => set({ notificationPreference }),
+      setSeniorMode: (seniorMode) => set({ seniorMode }),
+      setCurrentQuickCheck: (currentQuickCheck) => set({ currentQuickCheck }),
+      setProfile: (profile) => set({ profile }),
+      setProfileOnboarded: (profileOnboarded) => set({ profileOnboarded }),
+    }),
+    {
+      name: "nabiz-app-store",
+      partialize: (state) => ({
+        circle: state.circle,
+        onlyActive: state.onlyActive,
+        defaultPrivacy: state.defaultPrivacy,
+        notificationPreference: state.notificationPreference,
+        seniorMode: state.seniorMode,
+        profile: state.profile,
+        profileOnboarded: state.profileOnboarded,
+      }),
+    },
+  ),
+);
 
 /** Gizlilik çemberi etiketleri — UI genelinde tek kaynak. */
 export const CIRCLE_LABELS: Record<PrivacyCircle, string> = {

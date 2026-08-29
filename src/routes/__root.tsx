@@ -11,6 +11,7 @@ import { useEffect, type ReactNode } from "react";
 
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/sonner";
+import { ProfileOnboarding } from "@/features/onboarding/components/ProfileOnboarding";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -137,6 +138,7 @@ function RootComponent() {
       <TooltipProvider delayDuration={300}>
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />
+        <ProfileOnboarding />
         <Toaster position="top-center" />
       </TooltipProvider>
     </QueryClientProvider>

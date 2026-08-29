@@ -26,7 +26,7 @@ const MOBILE_NAV_ITEMS = [
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = useRouterState({ select: (state) => state.location.pathname });
   const openSos = useAppStore((s) => s.openSos);
-
+  const seniorMode = useAppStore((s) => s.seniorMode);
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Desktop sidebar — dark slate-900 */}
@@ -69,7 +69,12 @@ export function AppShell({ children }: { children: ReactNode }) {
       </header>
 
       <div className="md:pl-56">
-        <main className="mx-auto w-full max-w-5xl px-4 pt-4 pb-24 md:px-5 md:pb-8">
+        <main
+          className={cn(
+            "mx-auto w-full max-w-5xl px-4 pt-4 pb-24 md:px-5 md:pb-8",
+            seniorMode && "text-lg",
+          )}
+        >
           {children}
         </main>
       </div>

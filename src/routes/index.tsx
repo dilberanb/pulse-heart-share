@@ -6,6 +6,8 @@ import { PulseFeed } from "@/features/status/components/PulseFeed";
 import { SosSheet } from "@/features/status/components/SosSheet";
 import { StatusComposer } from "@/features/status/components/StatusComposer";
 import { QuickCheckDashboard } from "@/features/quickcheck/components/QuickCheckDashboard";
+import { ProfileHub } from "@/features/profile/components/ProfileHub";
+import { useAppStore } from "@/store/useAppStore";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -28,13 +30,23 @@ export const Route = createFileRoute("/")({
 
 /** Canlı gösterge paneli (Nabız akışı) — Phase 1 MVP ana ekranı. */
 function DashboardPage() {
+  const profile = useAppStore((s) => s.profile);
+
   return (
     <AppShell>
       <div className="space-y-6 bg-background">
         <h1 className="sr-only">Nabız gösterge paneli</h1>
-        <QuickCheckDashboard />
-        <MyStatusPanel />
-        <PulseFeed />
+
+        {/* Profile göre öne çıkan hızlı erişim */}
+        <ProfileHub />
+
+        {profile !== "senior" && (
+          <>
+            <QuickCheckDashboard />
+            <MyStatusPanel />
+            <PulseFeed />
+          </>
+        )}
       </div>
 
       {/* Global paneller: store üzerinden açılır, her yerden erişilebilir. */}

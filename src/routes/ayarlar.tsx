@@ -7,7 +7,9 @@ import { PrivacySelect } from "@/features/status/components/PrivacySelect";
 import { SosSheet } from "@/features/status/components/SosSheet";
 import { StatusComposer } from "@/features/status/components/StatusComposer";
 import { useAppStore } from "@/store/useAppStore";
-import { FileText, Shield, HeartPulse } from "lucide-react";
+import { FileText, Shield, HeartPulse, UserRound } from "lucide-react";
+import { PROFILE_META, type UserProfile } from "@/types/profile";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/ayarlar")({
   head: () => ({
@@ -30,14 +32,55 @@ function SettingsPage() {
   const setDefaultPrivacy = useAppStore((s) => s.setDefaultPrivacy);
   const onlyActive = useAppStore((s) => s.onlyActive);
   const setOnlyActive = useAppStore((s) => s.setOnlyActive);
+  const profile = useAppStore((s) => s.profile);
+  const setProfile = useAppStore((s) => s.setProfile);
+  const setSeniorMode = useAppStore((s) => s.setSeniorMode);
+
+  const changeProfile = (id: UserProfile) => {
+    setProfile(id);
+    setSeniorMode(id === "senior");
+  };
 
   return (
     <AppShell>
       <div className="max-w-xl space-y-6">
         <header>
           <h1 className="text-2xl font-semibold tracking-tight">Ayarlar</h1>
-          <p className="mt-1 text-sm text-muted-foreground">Paylaşım ve akış tercihleri.</p>
+          <p className="mt-1 text-sm text-muted-foreground">Profil ve paylaşım tercihleri.</p>
         </header>
+
+        <div className="space-y-3 rounded-xl border border-border bg-card p-5">
+          <div className="flex items-center gap-2">
+            <UserRound className="h-4 w-4 text-primary" />
+            <h2 className="text-base font-bold text-foreground">Profilim</h2>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Arayüz ve öne çıkan araçlar seçtiğin profile göre düzenlenir. Dilediğin zaman değiştirebilirsin.
+          </p>
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+            {PROFILE_META.map((p) => {
+              const active = profile === p.id;
+              return (
+                <button
+                  key={p.id}
+                  type="button"
+                  onClick={() => changeProfile(p.id)}
+                  className={cn(
+                    "flex flex-col items-center gap-1.5 rounded-xl border p-3 text-center transition-colors",
+                    active
+                      ? "border-primary bg-primary/10"
+                      : "border-border hover:bg-muted/30",
+                  )}
+                >
+                  <span className="text-2xl">{p.emoji}</span>
+                  <span className={cn("text-xs font-semibold", active ? "text-primary" : "text-foreground")}>
+                    {p.label}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
 
         <div className="space-y-4 rounded-xl border border-border bg-card p-5">
           <div className="space-y-1.5">
